@@ -18,13 +18,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Check out my other private repo
+      - name: Check database
         uses: actions/checkout@master
         with:
           repository: ardonplay/infopanel-database
           token: ${{ secrets.DATABASE_PAT }}
+          path: 'database'
       - name: Run PostgreSQL initialization
-        run: psql -f  ./infopanel-database/init.sql postgresql://postgres:postgres@localhost:5432/infopanel
+        run: psql -f  $GITHUB_WORKSPACE/database/init.sql postgresql://postgres:postgres@localhost:5432/infopanel
 
       - name: Set up JDK 17
         uses: actions/setup-java@v3
