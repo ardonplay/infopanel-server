@@ -3,9 +3,29 @@ on: [push,pull_request,workflow_dispatch]
 jobs:
   run:
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15.3
+        env:
+          POSTGRES_DB: infopanel
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Check out my other private repo
+        uses: actions/checkout@v4
+        with:
+          repository: ardonplay/infopanel-database
+          token: ${{ secrets.DATABASE_PAT }}
+      - name: Run PostgreSQL initialization
+        run: psql -h localhost -U postgres -d infopanel -a -f ./infopanel-database/init.sql
+
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
