@@ -1,7 +1,7 @@
 package io.github.ardonplay.infopanel.server.services;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import io.github.ardonplay.infopanel.server.models.Pair;
+import io.github.ardonplay.infopanel.server.common.Pair;
 import io.github.ardonplay.infopanel.server.models.entities.PageContent;
 import io.github.ardonplay.infopanel.server.models.entities.PageEntity;
 import io.github.ardonplay.infopanel.server.models.entities.PageContentOrder;

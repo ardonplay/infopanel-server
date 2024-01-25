@@ -7,7 +7,9 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "pages")
+@Builder
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
 public class PageEntity {
     @Id

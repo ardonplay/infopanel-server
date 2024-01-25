@@ -11,6 +11,7 @@ import java.util.Objects;
 @Table(name = "page_type")
 @Data
 @Builder
+@RequiredArgsConstructor
 @NoArgsConstructor
 @AllArgsConstructor
 public class PageType {
@@ -19,6 +20,7 @@ public class PageType {
     @Column(name = "id")
     private int id;
 
+    @NonNull
     @Column(name = "name")
     private String name;
 

@@ -1,7 +1,7 @@
 package io.github.ardonplay.infopanel.server.repositories;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import io.github.ardonplay.infopanel.server.models.Pair;
+import io.github.ardonplay.infopanel.server.common.Pair;
 import io.github.ardonplay.infopanel.server.models.entities.PageContent;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
