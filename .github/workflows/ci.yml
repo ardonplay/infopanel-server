@@ -26,7 +26,7 @@ jobs:
           path: 'database'
           
       - name: Run PostgreSQL initialization
-        working-directory: $GITHUB_WORKSPACE/database
+        working-directory: database
         run: ./database.sh run
 
       - name: Set up JDK 17
