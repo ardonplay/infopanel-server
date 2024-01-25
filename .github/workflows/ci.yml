@@ -1,0 +1,25 @@
+name: Workflow for Codecov example-java-maven
+on: 
+    push:
+      paths:
+        - 'server/**'
+    pull_request: 
+    workflow_dispatch:
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'oracle'
+          java-version: 17
+      - name: Install dependencies, run tests, and collect coverage
+        working-directory: ./server
+        run: gradle build
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4-beta
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
