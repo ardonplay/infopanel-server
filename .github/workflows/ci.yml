@@ -15,17 +15,18 @@ jobs:
           - 5432:5432
 
     steps:
-      - name: Checkout
+      - name: Checkout server
         uses: actions/checkout@v4
 
-      - name: Check database
+      - name: Checkout database
         uses: actions/checkout@master
         with:
           repository: ardonplay/infopanel-database
           token: ${{ secrets.DATABASE_PAT }}
           path: 'database'
+          
       - name: Run PostgreSQL initialization
-        run: psql -f  $GITHUB_WORKSPACE/database/init.sql postgresql://postgres:postgres@localhost:5432/infopanel
+        run:  $GITHUB_WORKSPACE/database.sh run
 
       - name: Set up JDK 17
         uses: actions/setup-java@v3
