@@ -28,7 +28,6 @@ public class PageService {
 
     private final PageContentService pageContentService;
 
-
     private final PageMapper mapper;
 
     private final TypeCacheService cacheService;

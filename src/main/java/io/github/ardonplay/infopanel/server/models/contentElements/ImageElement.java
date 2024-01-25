@@ -1,6 +1,7 @@
 package io.github.ardonplay.infopanel.server.models.contentElements;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
