@@ -24,7 +24,7 @@ jobs:
           repository: ardonplay/infopanel-database
           token: ${{ secrets.DATABASE_PAT }}
       - name: Run PostgreSQL initialization
-        run: psql -h localhost -U postgres -d infopanel -a -f ./infopanel-database/init.sql
+        run: psql -f  ./infopanel-database/init.sql postgresql://postgres:postgres@localhost:5432/infopanel
 
       - name: Set up JDK 17
         uses: actions/setup-java@v3
