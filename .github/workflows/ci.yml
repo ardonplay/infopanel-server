@@ -3,17 +3,7 @@ on: [push,pull_request,workflow_dispatch]
 jobs:
   run:
     runs-on: ubuntu-latest
-
-    services:
-      postgres:
-        image: postgres:15.3
-        env:
-          POSTGRES_DB: infopanel
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-        ports:
-          - 5432:5432
-
+    
     steps:
       - name: Checkout server
         uses: actions/checkout@v4
