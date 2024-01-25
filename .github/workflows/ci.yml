@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Check out my other private repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@master
         with:
           repository: ardonplay/infopanel-database
           token: ${{ secrets.DATABASE_PAT }}
