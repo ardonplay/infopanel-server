@@ -1,7 +1,9 @@
 package io.github.ardonplay.infopanel.server.models.dtos;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -14,18 +16,28 @@ import java.util.Objects;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.EXISTING_PROPERTY,
+        visible = true,
+        property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = PageFolderDTO.class, name = "FOLDER"),
+        @JsonSubTypes.Type(value = PageDTO.class, name = "PAGE")
+})
 public class PageDTO {
     Integer id;
 
-    String title;
-
     String type;
+
+    String title;
 
     Integer orderId;
 
     Integer parentId;
 
     List<PageContentDTO> content;
+
 
     public boolean hasNullImportantValues() {
         return title == null || type == null || orderId == null || content == null;

@@ -1,9 +1,9 @@
 package io.github.ardonplay.infopanel.server.repositories;
 
-import io.github.ardonplay.infopanel.server.models.entities.PageElementType;
+import io.github.ardonplay.infopanel.server.models.entities.PageElementTypeEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PageElementTypeRepository extends JpaRepository<PageElementType, Integer> {
+public interface PageElementTypeRepository extends JpaRepository<PageElementTypeEntity, Integer> {
 
-    PageElementType findFirstByName(String name);
+    PageElementTypeEntity findFirstByName(String name);
 }

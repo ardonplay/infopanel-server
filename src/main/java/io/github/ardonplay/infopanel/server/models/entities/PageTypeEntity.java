@@ -1,5 +1,6 @@
 package io.github.ardonplay.infopanel.server.models.entities;
 
+import io.github.ardonplay.infopanel.server.models.enums.PageType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,7 +15,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @NoArgsConstructor
 @AllArgsConstructor
-public class PageType {
+public class PageTypeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -23,6 +24,10 @@ public class PageType {
     @NonNull
     @Column(name = "name")
     private String name;
+
+    public PageTypeEntity(PageType type){
+        this.name = type.name();
+    }
 
     @OneToMany(mappedBy = "pageType", cascade = CascadeType.ALL)
     private List<PageEntity> pages;
@@ -36,8 +41,8 @@ public class PageType {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PageType pageType = (PageType) o;
-        return Objects.equals(name, pageType.name);
+        PageTypeEntity pageTypeEntity = (PageTypeEntity) o;
+        return Objects.equals(name, pageTypeEntity.name);
     }
 
     @Override

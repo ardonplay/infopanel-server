@@ -1,5 +1,6 @@
 package io.github.ardonplay.infopanel.server.models.entities;
 
+import io.github.ardonplay.infopanel.server.models.enums.UserType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,4 +24,8 @@ public class UserRole {
 
     @OneToMany(mappedBy = "userRole", cascade = CascadeType.ALL)
     private List<User> users;
+
+    public UserRole(UserType type){
+        this.name = type.name();
+    }
 }

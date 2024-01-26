@@ -3,6 +3,7 @@ package io.github.ardonplay.infopanel.server.repositories;
 import com.fasterxml.jackson.databind.JsonNode;
 import io.github.ardonplay.infopanel.server.common.Pair;
 import io.github.ardonplay.infopanel.server.models.entities.PageContent;
+import io.github.ardonplay.infopanel.server.models.enums.PageElementType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,9 +17,9 @@ public interface PageContentRepository extends JpaRepository<PageContent, Intege
             @Param("bodies") List<JsonNode> bodies
     );
 
-    default boolean containsPair(List<PageContent> entities, Pair<String, JsonNode> pair) {
+    default boolean containsPair(List<PageContent> entities, Pair<PageElementType, JsonNode> pair) {
         for (PageContent entity : entities) {
-            if (entity.getPageElementType().getName().equals(pair.first()) && entity.getBody().equals(pair.second())) {
+            if (entity.getPageElementType().getName().equals(pair.first().name()) && entity.getBody().equals(pair.second())) {
                 return true;
             }
         }

@@ -32,7 +32,7 @@ public class PageEntity {
 
     @ManyToOne()
     @JoinColumn(name = "type", referencedColumnName = "id")
-    private PageType pageType;
+    private PageTypeEntity pageType;
 
     @OneToMany(mappedBy = "page", cascade = {CascadeType.ALL}, orphanRemoval = true)
     private List<PageContentOrder> contentOrders;

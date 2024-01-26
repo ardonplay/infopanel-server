@@ -34,6 +34,7 @@ public interface PageMapper {
     PageDTO mapToPageDTO(PageEntity source);
 
 
+
     @Mapping(target = "type", source = "pageElementType.name")
     @Named("mapContent")
     PageContentDTO mapContentToDTO(PageContent source);

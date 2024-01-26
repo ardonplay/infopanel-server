@@ -1,5 +1,6 @@
 package io.github.ardonplay.infopanel.server.models.entities;
 
+import io.github.ardonplay.infopanel.server.models.enums.PageElementType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,7 +13,7 @@ import java.util.List;
 @Builder
 @Getter
 @Setter
-public class PageElementType {
+public class PageElementTypeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -23,5 +24,9 @@ public class PageElementType {
 
     @OneToMany(mappedBy = "pageElementType", cascade = CascadeType.ALL)
     private List<PageContent> pageContents;
+
+    public PageElementTypeEntity(PageElementType type){
+        this.name = type.name();
+    }
 }
 

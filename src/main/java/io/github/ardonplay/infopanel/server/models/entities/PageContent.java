@@ -28,13 +28,13 @@ public class PageContent {
 
     @ManyToOne()
     @JoinColumn(name = "element_type", referencedColumnName = "id")
-    private PageElementType pageElementType;
+    private PageElementTypeEntity pageElementType;
 
     @OneToMany(mappedBy = "pageContent", cascade=CascadeType.ALL)
     private List<PageContentOrder> orders;
 
-    public PageContent(PageElementType pageElementType, JsonNode body) {
-        this.pageElementType = pageElementType;
+    public PageContent(PageElementTypeEntity pageElementTypeEntity, JsonNode body) {
+        this.pageElementType = pageElementTypeEntity;
         this.body = body;
     }
 

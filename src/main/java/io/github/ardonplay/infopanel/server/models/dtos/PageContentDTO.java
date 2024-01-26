@@ -1,6 +1,7 @@
 package io.github.ardonplay.infopanel.server.models.dtos;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import io.github.ardonplay.infopanel.server.models.enums.PageElementType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,7 +14,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PageContentDTO {
-    String type;
+    PageElementType type;
     JsonNode body;
 
     @Override

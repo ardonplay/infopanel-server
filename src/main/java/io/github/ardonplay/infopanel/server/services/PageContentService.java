@@ -4,8 +4,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import io.github.ardonplay.infopanel.server.common.Pair;
 import io.github.ardonplay.infopanel.server.models.dtos.PageContentDTO;
 import io.github.ardonplay.infopanel.server.models.entities.PageContent;
+import io.github.ardonplay.infopanel.server.models.entities.PageElementTypeEntity;
 import io.github.ardonplay.infopanel.server.models.entities.PageEntity;
 import io.github.ardonplay.infopanel.server.models.entities.PageContentOrder;
+import io.github.ardonplay.infopanel.server.models.enums.PageElementType;
 import io.github.ardonplay.infopanel.server.repositories.PageContentRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -24,20 +26,20 @@ public class PageContentService {
     private final TypeCacheService cacheService;
 
     @Transactional
-    public List<PageContent> getAllByContentPairs(List<Pair<String, JsonNode>> contentPairs) {
+    public List<PageContent> getAllByContentPairs(List<Pair<PageElementType, JsonNode>> contentPairs) {
         return pageContentRepository
                 .findPageContentsByPageElementTypeAndBody(
-                        contentPairs.stream().map(Pair::first).toList(),
+                        contentPairs.stream().map(pair -> pair.first().name()).toList(),
                         contentPairs.stream().map(Pair::second).toList());
     }
 
     @Transactional
-    protected List<PageContent> updatePageContent(List<PageContent> pageContents, List<Pair<String, JsonNode>> contentPairs) {
+    protected List<PageContent> updatePageContent(List<PageContent> pageContents, List<Pair<PageElementType, JsonNode>> contentPairs) {
         List<PageContent> result = new ArrayList<>(pageContents);
 
-        for (Pair<String, JsonNode> pair : contentPairs) {
+        for (Pair<PageElementType, JsonNode> pair : contentPairs) {
             if (!pageContentRepository.containsPair(result, pair)) {
-                PageContent pageContent = new PageContent(cacheService.getPageElementTypes().get(pair.first()), pair.second());
+                PageContent pageContent = new PageContent(cacheService.getPageElementTypes().get(pair.first().name()), pair.second());
                 pageContent = pageContentRepository.save(pageContent);
                 result.add(pageContent);
             }
@@ -47,7 +49,7 @@ public class PageContentService {
 
     @Transactional
     public List<PageContent> updateByDTO(PageEntity page, List<PageContentDTO> pageContentDTOS){
-        List<Pair<String, JsonNode>> contentPairs = pageContentDTOS.stream().map((content) -> new Pair<>(content.getType(), content.getBody())).toList();
+        List<Pair<PageElementType, JsonNode>> contentPairs = pageContentDTOS.stream().map((content) -> new Pair<>(content.getType(), content.getBody())).toList();
 
         List<PageContent> pageContents = getAllByContentPairs(contentPairs);
 

@@ -5,7 +5,8 @@ import io.github.ardonplay.infopanel.server.models.dtos.PageFolderDTO;
 import io.github.ardonplay.infopanel.server.models.entities.PageContent;
 import io.github.ardonplay.infopanel.server.models.entities.PageContentOrder;
 import io.github.ardonplay.infopanel.server.models.entities.PageEntity;
-import io.github.ardonplay.infopanel.server.models.entities.PageType;
+import io.github.ardonplay.infopanel.server.models.entities.PageTypeEntity;
+import io.github.ardonplay.infopanel.server.models.enums.PageType;
 import io.github.ardonplay.infopanel.server.repositories.PageRepository;
 import io.github.ardonplay.infopanel.server.services.mappers.PageMapper;
 import lombok.AllArgsConstructor;
@@ -48,21 +49,36 @@ public class PageService {
 
     @Transactional
     public PageDTO updatePage(PageDTO pageDTO) {
+
         PageEntity page = pageRepository.findById(pageDTO.getId())
                 .orElseThrow(() -> new RuntimeException("Page with id " + pageDTO.getId() + " not found"));
+
+        if(!page.getPageType().getName().equals(pageDTO.getType())){
+            page.getChildren().clear();
+        }
 
         updatePageType(pageDTO, page);
         updateTitle(pageDTO, page);
         updateParentPage(pageDTO, page);
         updateContent(pageDTO, page);
 
+        if (pageDTO.getType().equals(PageType.FOLDER.name())) {
+            updateChildren((PageFolderDTO) pageDTO, page);
+        }
         return pageDTO;
+    }
+
+    private void updateChildren(PageFolderDTO folderDTO, PageEntity page) {
+        if (folderDTO.getChildren() != null) {
+            List<PageEntity> children = pageRepository.findAllById(folderDTO.getChildren().stream().map(PageDTO::getId).toList());
+            page.setChildren(children);
+        }
     }
 
     private void updatePageType(PageDTO pageDTO, PageEntity page) {
         if (pageDTO.getType() != null) {
-            PageType pageType = cacheService.getPageTypes().get(pageDTO.getType());
-            page.setPageType(pageType);
+            PageTypeEntity pageTypeEntity = cacheService.getPageTypes().get(pageDTO.getType());
+            page.setPageType(pageTypeEntity);
         }
     }
 
@@ -88,26 +104,29 @@ public class PageService {
 
     @Transactional
     public PageDTO savePage(PageDTO pageDTO) throws BadRequestException {
-        if(pageDTO.hasNullImportantValues()){
+        if (pageDTO.hasNullImportantValues()) {
             throw new BadRequestException("OMG BRO WHY SO BAD!!!");
         }
         PageEntity page = createPageEntityFromDTO(pageDTO);
-        PageDTO result;
 
-        if ("FOLDER".equals(pageDTO.getType())) {
-            result = saveFolderPage(page, (PageFolderDTO) pageDTO);
-        } else {
-            result = saveContentPage(page, pageDTO);
+        switch (PageType.valueOf(pageDTO.getType())) {
+            case FOLDER -> {
+                return saveFolderPage(page, (PageFolderDTO) pageDTO);
+            }
+            case PAGE -> {
+                return saveContentPage(page, pageDTO);
+            }
+            default -> {
+                return null;
+            }
         }
-
-        return result;
     }
 
     private PageEntity createPageEntityFromDTO(PageDTO pageDTO) {
         PageEntity page = new PageEntity();
         page.setTitle(pageDTO.getTitle());
-        PageType pageType = cacheService.getPageTypes().get(pageDTO.getType());
-        page.setPageType(pageType);
+        PageTypeEntity pageTypeEntity = cacheService.getPageTypes().get(pageDTO.getType());
+        page.setPageType(pageTypeEntity);
         page.setOrderId(pageDTO.getOrderId());
 
         if (pageDTO.getParentId() != null) {
@@ -136,12 +155,7 @@ public class PageService {
 
     public Page<PageDTO> findAll(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return pageRepository.findAll(pageable).map(pageEntity -> {
-            PageDTO pageDTO = mapper.mapToPageDTO(pageEntity);
-            pageDTO.setContent(pageEntity.getContentOrders().stream().map(PageContentOrder::getPageContent).map(mapper::mapContentToDTO).toList());
-            log.info("Page: {}", pageDTO);
-            return pageDTO;
-        });
+        return pageRepository.findAll(pageable).map(mapper::mapToPageDTOWithoutContent);
     }
 
     public void deletePage(Integer id) {

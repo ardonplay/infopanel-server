@@ -1,6 +1,7 @@
 package io.github.ardonplay.infopanel.server.controllers;
 
 import io.github.ardonplay.infopanel.server.models.dtos.PageDTO;
+import io.github.ardonplay.infopanel.server.models.dtos.PageFolderDTO;
 import io.github.ardonplay.infopanel.server.services.PageService;
 import lombok.AllArgsConstructor;
 import org.apache.coyote.BadRequestException;
@@ -28,7 +29,7 @@ public class PageController {
     }
 
     @PatchMapping
-    private ResponseEntity<PageDTO> updatePage(@RequestBody PageDTO pageDTO) {
+    private ResponseEntity<PageDTO> updatePage(@RequestBody PageDTO pageDTO) throws BadRequestException {
         return new ResponseEntity<>(service.updatePage(pageDTO), HttpStatus.OK);
     }
 

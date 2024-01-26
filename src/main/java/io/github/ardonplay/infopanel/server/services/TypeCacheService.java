@@ -1,7 +1,7 @@
 package io.github.ardonplay.infopanel.server.services;
 
-import io.github.ardonplay.infopanel.server.models.entities.PageElementType;
-import io.github.ardonplay.infopanel.server.models.entities.PageType;
+import io.github.ardonplay.infopanel.server.models.entities.PageElementTypeEntity;
+import io.github.ardonplay.infopanel.server.models.entities.PageTypeEntity;
 import io.github.ardonplay.infopanel.server.models.entities.UserRole;
 import io.github.ardonplay.infopanel.server.repositories.PageElementTypeRepository;
 import io.github.ardonplay.infopanel.server.repositories.PageTypeRepository;
@@ -25,8 +25,8 @@ public class TypeCacheService {
     private final PageElementTypeRepository pageElementTypeRepository;
 
     @Cacheable("page_element_types")
-    public Map<String, PageElementType> getPageElementTypes() {
-        Map<String, PageElementType> pageElementTypeMap = new HashMap<>();
+    public Map<String, PageElementTypeEntity> getPageElementTypes() {
+        Map<String, PageElementTypeEntity> pageElementTypeMap = new HashMap<>();
 
         pageElementTypeRepository.findAll().forEach(pageElementType -> pageElementTypeMap.put(pageElementType.getName(), pageElementType));
 
@@ -34,8 +34,8 @@ public class TypeCacheService {
     }
 
     @Cacheable("page_types")
-    public Map<String, PageType> getPageTypes() {
-        Map<String, PageType> pageTypeMap = new HashMap<>();
+    public Map<String, PageTypeEntity> getPageTypes() {
+        Map<String, PageTypeEntity> pageTypeMap = new HashMap<>();
 
         pageTypeRepository.findAll().forEach(pageType -> pageTypeMap.put(pageType.getName(), pageType));
 
