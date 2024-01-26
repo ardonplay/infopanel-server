@@ -8,14 +8,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Data
-@RequiredArgsConstructor
-public class AbstractContentElement {
+public abstract class AbstractContentElement {
 
     @JsonIgnore
-    private final ObjectMapper objectMapper;
+    private static ObjectMapper objectMapper = new ObjectMapper();
 
-    public AbstractContentElement fromJsonNode(JsonNode jsonNode) {
-        return objectMapper.convertValue(jsonNode, this.getClass());
+    public static AbstractContentElement fromJsonNode(JsonNode jsonNode, Class<? extends AbstractContentElement> contentElement) {
+        return objectMapper.convertValue(jsonNode, contentElement);
     }
 
     public JsonNode toJsonNode() {

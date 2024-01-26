@@ -1,18 +1,15 @@
 package io.github.ardonplay.infopanel.server.models.contentElements;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.stereotype.Component;
 
+@EqualsAndHashCode(callSuper = true)
 @Component
-@Getter
-@Setter
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ImageElement extends AbstractContentElement{
 
     private String id;
-    public ImageElement(ObjectMapper objectMapper) {
-        super(objectMapper);
-    }
 }

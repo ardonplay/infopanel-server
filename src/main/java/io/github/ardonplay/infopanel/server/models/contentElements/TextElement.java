@@ -7,14 +7,13 @@ import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+@EqualsAndHashCode(callSuper = true)
 @Component
-@Getter
-@Setter
-public class TextElement extends AbstractContentElement{
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class TextElement extends AbstractContentElement {
     @JsonProperty("content")
     private String content;
-
-    public TextElement(ObjectMapper objectMapper) {
-        super(objectMapper);
-    }
 }

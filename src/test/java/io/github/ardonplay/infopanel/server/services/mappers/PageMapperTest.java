@@ -42,8 +42,7 @@ public class PageMapperTest {
     @Test
     void mapToPageDTOWithContent() {
 
-        TextElement element = new TextElement(objectMapper);
-        element.setContent("This is text of test content");
+        TextElement element = new TextElement("This is text of test content");
 
         expectedPageDTO.setContent(List.of(PageContentDTO.builder().type("TEXT").body(element.toJsonNode()).build()));
 
@@ -67,7 +66,7 @@ public class PageMapperTest {
 
     @Test
     void mapToFolderDTO(){
-        PageFolderDTO expectedFolderDTO = PageFolderDTO.builder()
+        PageDTO expectedFolderDTO = PageFolderDTO.builder()
                 .id(2)
                 .title("Test folder")
                 .type("FOLDER")

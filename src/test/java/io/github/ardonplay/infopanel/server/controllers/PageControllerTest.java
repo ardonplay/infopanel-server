@@ -11,8 +11,6 @@ import io.github.ardonplay.infopanel.server.services.PageService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -45,7 +43,7 @@ public class PageControllerTest {
     void getPage_folder() throws Exception {
         PageDTO child = PageDTO.builder().id(2).title("Test page").type("PAGE").parentId(1).orderId(1).build();
 
-        Mockito.when(pageService.getPage(1)).thenReturn(PageFolderDTO.builder()
+        when(pageService.getPage(1)).thenReturn(PageFolderDTO.builder()
                 .id(1)
                 .title("Test folder")
                 .type("FOLDER")
@@ -69,13 +67,11 @@ public class PageControllerTest {
 
     @Test
     void getPage_page() throws Exception {
-        ObjectMapper objectMapper = new ObjectMapper();
-        TextElement contentElement = new TextElement(objectMapper);
-        contentElement.setContent("Test text");
+        TextElement contentElement = new TextElement("Test text");
 
         PageDTO page = PageDTO.builder().id(2).title("Test page").type("PAGE").content(List.of(PageContentDTO.builder().type("TEXT").body(contentElement.toJsonNode()).build())).parentId(1).orderId(1).build();
 
-        Mockito.when(pageService.getPage(2)).thenReturn(page);
+        when(pageService.getPage(2)).thenReturn(page);
 
         mockMvc.perform(get("/api/v1/page?id={id}", 2))
                 .andExpect(status().isOk())
@@ -99,4 +95,5 @@ public class PageControllerTest {
 
         verify(pageService, times(1)).getPage(2);
     }
+
 }
