@@ -40,7 +40,7 @@ public class PageDTO {
 
 
     public boolean hasNullImportantValues() {
-        return title == null || type == null || orderId == null || content == null;
+        return title == null || type == null || orderId == null;
     }
 
     @Override

@@ -3,8 +3,8 @@ package io.github.ardonplay.infopanel.server.services;
 import com.fasterxml.jackson.databind.JsonNode;
 import io.github.ardonplay.infopanel.server.common.Pair;
 import io.github.ardonplay.infopanel.server.models.entities.PageContent;
-import io.github.ardonplay.infopanel.server.models.entities.PageEntity;
 import io.github.ardonplay.infopanel.server.models.entities.PageContentOrder;
+import io.github.ardonplay.infopanel.server.models.entities.PageEntity;
 import io.github.ardonplay.infopanel.server.models.enums.PageElementType;
 import io.github.ardonplay.infopanel.server.repositories.PageContentOrderRepository;
 import jakarta.transaction.Transactional;
@@ -29,25 +29,29 @@ public class PageContentOrderService {
         pageContentOrderRepository.deleteAllByPageAndPageContentNotInList(page.getId(), ordersId);
     }
 
-    private Map<Pair<Integer, Pair<PageElementType, JsonNode>>, PageContentOrder> createOldOrderMap(PageEntity page){
+    private Map<Pair<Integer, Pair<PageElementType, JsonNode>>, PageContentOrder> createOldOrderMap(PageEntity page) {
         List<PageContentOrder> oldOrder = findAllByPage(page);
 
         Map<Pair<Integer, Pair<PageElementType, JsonNode>>, PageContentOrder> oldOrderMap = new HashMap<>();
 
-        oldOrder.forEach(order -> oldOrderMap.put(new Pair<>(order.getOrderId(), new Pair<>(PageElementType.valueOf(order.getPageContent().getPageElementType().getName()), order.getPageContent().getBody())), order));
+        oldOrder.forEach(order -> oldOrderMap.put(new Pair<>(order.getOrderId(),
+                new Pair<>(PageElementType.valueOf
+                        (order.getPageContent().getPageElementType().getName()),
+                        order.getPageContent().getBody())), order));
 
         return oldOrderMap;
     }
 
-    private Map<Pair<PageElementType, JsonNode>, PageContent> createPageContentMap(List<PageContent> pageContents){
+    private Map<Pair<PageElementType, JsonNode>, PageContent> createPageContentMap(List<PageContent> pageContents) {
         Map<Pair<PageElementType, JsonNode>, PageContent> contentMap = new HashMap<>();
 
-        pageContents.forEach(content -> contentMap.put(new Pair<>(PageElementType.valueOf(content.getPageElementType().getName()), content.getBody()), content));
-        return  contentMap;
+        pageContents.forEach(content -> contentMap.put(new Pair<>(PageElementType.valueOf
+                (content.getPageElementType().getName()), content.getBody()), content));
+        return contentMap;
     }
 
     @Transactional
-    public List<PageContentOrder> updateOrder(PageEntity page, List<Pair<PageElementType, JsonNode>> contentPairs, List<PageContent> pageContents){
+    public List<PageContentOrder> updateOrder(PageEntity page, List<Pair<PageElementType, JsonNode>> contentPairs, List<PageContent> pageContents) {
         List<PageContentOrder> newOrder = new ArrayList<>();
 
         Map<Pair<PageElementType, JsonNode>, PageContent> contentMap = createPageContentMap(pageContents);
@@ -59,7 +63,6 @@ public class PageContentOrderService {
             Pair<Integer, Pair<PageElementType, JsonNode>> pairKey = new Pair<>(currentIndex, currentPair);
 
             if (!oldOrderMap.containsKey(pairKey)) {
-                System.out.println("Какая-то херь" + contentMap.get(currentPair));
                 PageContentOrder newContentOrder = new PageContentOrder(currentIndex, page, contentMap.get(currentPair));
                 newContentOrder = pageContentOrderRepository.save(newContentOrder);
                 newOrder.add(newContentOrder);
@@ -72,8 +75,8 @@ public class PageContentOrderService {
         return newOrder;
     }
 
-    public List<PageContentOrder> findAllByPage(PageEntity page){
-       return pageContentOrderRepository.findAllByPage(page);
+    public List<PageContentOrder> findAllByPage(PageEntity page) {
+        return pageContentOrderRepository.findAllByPage(page);
     }
 
 }

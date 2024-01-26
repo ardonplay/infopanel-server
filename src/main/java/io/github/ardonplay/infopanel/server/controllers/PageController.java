@@ -29,7 +29,7 @@ public class PageController {
     }
 
     @PatchMapping
-    private ResponseEntity<PageDTO> updatePage(@RequestBody PageDTO pageDTO) throws BadRequestException {
+    private ResponseEntity<PageDTO> updatePage(@RequestBody PageDTO pageDTO) {
         return new ResponseEntity<>(service.updatePage(pageDTO), HttpStatus.OK);
     }
 

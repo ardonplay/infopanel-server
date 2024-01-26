@@ -1,6 +1,7 @@
 package io.github.ardonplay.infopanel.server.common.exceptionHandler;
 
 import io.github.ardonplay.infopanel.server.common.errorsResponse.ApiErrorInfo;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.BadRequestException;
@@ -13,13 +14,22 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
 @Slf4j
-public class GlobalUserExceptionHandler {
+public class GlobalExceptionHandler {
 
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(BadRequestException.class)
     @ResponseBody
     ApiErrorInfo
     handleUserAlreadyExistsException(HttpServletRequest req, Exception ex) {
+        return new ApiErrorInfo(HttpStatus.BAD_REQUEST.value(), req.getRequestURL(), ex.getMessage());
+    }
+
+
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(EntityNotFoundException.class)
+    @ResponseBody
+    ApiErrorInfo
+    handlePageNotFoundException(HttpServletRequest req, Exception ex) {
         return new ApiErrorInfo(HttpStatus.BAD_REQUEST.value(), req.getRequestURL(), ex.getMessage());
     }
 

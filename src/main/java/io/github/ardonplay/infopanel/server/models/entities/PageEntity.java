@@ -27,7 +27,7 @@ public class PageEntity {
     @JoinColumn(name = "parent_id", referencedColumnName = "id")
     private PageEntity parentPage;
 
-    @OneToMany(mappedBy = "parentPage")
+    @OneToMany(mappedBy = "parentPage", cascade = {CascadeType.REFRESH})
     private List<PageEntity> children;
 
     @ManyToOne()

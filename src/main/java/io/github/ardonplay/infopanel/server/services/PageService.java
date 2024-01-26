@@ -9,6 +9,7 @@ import io.github.ardonplay.infopanel.server.models.entities.PageTypeEntity;
 import io.github.ardonplay.infopanel.server.models.enums.PageType;
 import io.github.ardonplay.infopanel.server.repositories.PageRepository;
 import io.github.ardonplay.infopanel.server.services.mappers.PageMapper;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.BadRequestException;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 
 @Slf4j
@@ -35,7 +37,7 @@ public class PageService {
 
     public PageDTO getPage(int id) {
 
-        PageEntity page = pageRepository.findById(id).orElseThrow();
+        PageEntity page = pageRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Page with id: " + id + " not exist"));
 
         if (page.getPageType().getName().equals("FOLDER")) {
             return mapper.mapToFolder(page);
@@ -51,10 +53,19 @@ public class PageService {
     public PageDTO updatePage(PageDTO pageDTO) {
 
         PageEntity page = pageRepository.findById(pageDTO.getId())
-                .orElseThrow(() -> new RuntimeException("Page with id " + pageDTO.getId() + " not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Page with id " + pageDTO.getId() + " not found"));
 
-        if(!page.getPageType().getName().equals(pageDTO.getType())){
-            page.getChildren().clear();
+
+        if(pageDTO.getType().equals(PageType.PAGE.name())){
+            List<PageEntity> children = page.getChildren();
+            if(!children.isEmpty()){
+                children.forEach(child -> child.setParentPage(null));
+                page.getChildren().clear();
+            }
+        }
+
+        if (pageDTO.getType().equals(PageType.FOLDER.name())) {
+            updateChildren((PageFolderDTO) pageDTO, page);
         }
 
         updatePageType(pageDTO, page);
@@ -62,16 +73,15 @@ public class PageService {
         updateParentPage(pageDTO, page);
         updateContent(pageDTO, page);
 
-        if (pageDTO.getType().equals(PageType.FOLDER.name())) {
-            updateChildren((PageFolderDTO) pageDTO, page);
-        }
+
         return pageDTO;
     }
 
     private void updateChildren(PageFolderDTO folderDTO, PageEntity page) {
         if (folderDTO.getChildren() != null) {
             List<PageEntity> children = pageRepository.findAllById(folderDTO.getChildren().stream().map(PageDTO::getId).toList());
-            page.setChildren(children);
+            page.getChildren().clear();
+            page.getChildren().addAll(children);
         }
     }
 
@@ -91,7 +101,7 @@ public class PageService {
     private void updateParentPage(PageDTO pageDTO, PageEntity page) {
         if (pageDTO.getParentId() != null) {
             PageEntity parent = pageRepository.findById(pageDTO.getParentId())
-                    .orElseThrow(() -> new RuntimeException("Родительская страница с id " + pageDTO.getParentId() + " не найдена"));
+                    .orElseThrow(() -> new EntityNotFoundException("Parent page with  id " + pageDTO.getParentId() + "not found"));
             page.setParentPage(parent);
         }
     }
@@ -136,12 +146,19 @@ public class PageService {
         return page;
     }
 
-    private PageDTO saveFolderPage(PageEntity page, PageFolderDTO folderDTO) {
-        page.setChildren(pageRepository.findAllById(folderDTO.getChildren().stream()
-                .map(PageDTO::getId)
-                .toList()));
+    private PageDTO saveFolderPage(PageEntity page, PageFolderDTO folderDTO) throws BadRequestException {
+        List<PageEntity> children = pageRepository.findAllById(folderDTO.getChildren().stream()
+                        .map(PageDTO::getId)
+                        .toList());
+
+        for (PageEntity child : children) {
+            if (child.getParentPage() != null) {
+                throw new BadRequestException("child id: " + child.getId() + " belongs other page");
+            }
+        }
+        page.setChildren(children);
         pageRepository.save(page);
-        return mapper.mapToPageDTO(page);
+        return mapper.mapToFolder(page);
     }
 
     private PageDTO saveContentPage(PageEntity page, PageDTO pageDTO) {
@@ -159,7 +176,7 @@ public class PageService {
     }
 
     public void deletePage(Integer id) {
-        pageRepository.delete(pageRepository.findById(id).orElseThrow());
+        pageRepository.delete(pageRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Page with id: " + id + " not exist")));
     }
 
 }
