@@ -25,7 +25,7 @@ public class PageMapperTest {
     private PageDTO expectedPageDTO;
     @BeforeEach
     void setUp(){
-        expectedPageDTO = PageDTO.builder().id(1).title("Test page").type(PageType.PAGE).orderId(1).build();
+        expectedPageDTO = PageDTO.builder().id(1).title("Test page").type(PageType.PAGE.name()).orderId(1).build();
     }
     @Test
     void mapToPageDTOWithoutContent() {
@@ -69,7 +69,7 @@ public class PageMapperTest {
         PageDTO expectedFolderDTO = PageFolderDTO.builder()
                 .id(2)
                 .title("Test folder")
-                .type(PageType.FOLDER)
+                .type(PageType.FOLDER.name())
                 .orderId(1)
                 .children(List.of(expectedPageDTO)).build();
 

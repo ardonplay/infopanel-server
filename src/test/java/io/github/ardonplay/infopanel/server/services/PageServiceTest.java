@@ -74,9 +74,9 @@ public class PageServiceTest {
                 .children(List.of(page)).build();
 
         PageEntity pageEntity = PageEntity.builder().pageType(new PageTypeEntity(PageType.PAGE))
-                .id(pageId).title("Test page").orderId(1).build();
+                .id(2).title("Test page").orderId(1).build();
         PageEntity expectedPageFolder = PageEntity.builder().pageType(new PageTypeEntity(PageType.FOLDER))
-                .id(1).title("Test folder").orderId(1).children(List.of(pageEntity)).build();
+                .id(pageId).title("Test folder").orderId(1).children(List.of(pageEntity)).build();
 
         when(pageRepository.findById(pageId)).thenReturn(Optional.of(expectedPageFolder));
         PageDTO entity = pageService.getPage(pageId);

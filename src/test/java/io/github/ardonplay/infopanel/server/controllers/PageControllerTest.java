@@ -43,12 +43,12 @@ public class PageControllerTest {
 
     @Test
     void getPage_folder() throws Exception {
-        PageDTO child = PageDTO.builder().id(2).title("Test page").type(PageType.PAGE).parentId(1).orderId(1).build();
+        PageDTO child = PageDTO.builder().id(2).title("Test page").type(PageType.PAGE.name()).parentId(1).orderId(1).build();
 
         when(pageService.getPage(1)).thenReturn(PageFolderDTO.builder()
                 .id(1)
                 .title("Test folder")
-                .type(PageType.FOLDER)
+                .type(PageType.FOLDER.name())
                 .orderId(1)
                 .children(List.of(child)).build());
 
@@ -71,7 +71,7 @@ public class PageControllerTest {
     void getPage_page() throws Exception {
         TextElement contentElement = new TextElement("Test text");
 
-        PageDTO page = PageDTO.builder().id(2).title("Test page").type(PageType.PAGE).content(List.of(PageContentDTO.builder().type(PageElementType.TEXT).body(contentElement.toJsonNode()).build())).parentId(1).orderId(1).build();
+        PageDTO page = PageDTO.builder().id(2).title("Test page").type(PageType.PAGE.name()).content(List.of(PageContentDTO.builder().type(PageElementType.TEXT).body(contentElement.toJsonNode()).build())).parentId(1).orderId(1).build();
 
         when(pageService.getPage(2)).thenReturn(page);
 
