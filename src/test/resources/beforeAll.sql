@@ -1,4 +1,4 @@
-TRUNCATE user_role, page_type, page_element_type, page_content_order, pages, user_role, users CASCADE;
+TRUNCATE user_role, page_type, page_element_type, page_content_order, pages, user_role, users RESTART IDENTITY CASCADE;
 
 
 INSERT INTO "page_type" ("name") VALUES ('FOLDER'), ('PAGE');

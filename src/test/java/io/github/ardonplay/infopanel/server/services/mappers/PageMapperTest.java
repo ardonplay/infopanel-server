@@ -8,17 +8,39 @@ import io.github.ardonplay.infopanel.server.models.dtos.PageFolderDTO;
 import io.github.ardonplay.infopanel.server.models.entities.*;
 import io.github.ardonplay.infopanel.server.models.enums.PageElementType;
 import io.github.ardonplay.infopanel.server.models.enums.PageType;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import org.testcontainers.containers.PostgreSQLContainer;
 
 import java.util.List;
 
 
 @SpringBootTest
 public class PageMapperTest {
+
+    public static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:15.3").withInitScript("init.sql");
+
+
+    @BeforeAll
+    static void beforeAll() {
+        postgres.start();
+    }
+
+    @AfterAll
+    static void afterAll() {
+        postgres.stop();
+    }
+
+    @DynamicPropertySource
+    static void configureProperties(DynamicPropertyRegistry registry) {
+        registry.add("spring.datasource.url", postgres::getJdbcUrl);
+        registry.add("spring.datasource.username", postgres::getUsername);
+        registry.add("spring.datasource.password", postgres::getPassword);
+    }
+
     @Autowired
     private PageMapper pageMapper;
 
