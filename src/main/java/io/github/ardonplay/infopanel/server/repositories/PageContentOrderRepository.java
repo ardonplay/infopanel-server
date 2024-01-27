@@ -12,7 +12,7 @@ import java.util.List;
 
 @Transactional
 public interface PageContentOrderRepository extends JpaRepository<PageContentOrder, Integer> {
-    List<PageContentOrder> findAllByPage(PageEntity page);
+    List<PageContentOrder> findAllByPageId(Integer pageId);
     @Transactional
     @Modifying
     @Query("DELETE FROM PageContentOrder e WHERE e.page.id = :pageId AND e.id NOT IN :orders")

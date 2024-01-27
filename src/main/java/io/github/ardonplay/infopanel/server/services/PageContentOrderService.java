@@ -76,7 +76,7 @@ public class PageContentOrderService {
     }
 
     public List<PageContentOrder> findAllByPage(PageEntity page) {
-        return pageContentOrderRepository.findAllByPage(page);
+        return pageContentOrderRepository.findAllByPageId(page.getId());
     }
 
 }

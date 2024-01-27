@@ -184,6 +184,7 @@ public class PageCRUDTest {
     @Test
     @Sql("/beforeAll.sql")
     void deletePageThatAlreadyDeleted() throws Exception {
+        mockMvc.perform(delete("/api/v1/page?id={id}", 1)).andExpect(status().isOk());
         mockMvc.perform(delete("/api/v1/page?id={id}", 1)).andExpect(status().isBadRequest());
     }
 
