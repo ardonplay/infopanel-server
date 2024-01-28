@@ -1,13 +1,14 @@
 package io.github.ardonplay.infopanel.server.services.mappers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.ardonplay.infopanel.server.models.contentElements.TextElement;
-import io.github.ardonplay.infopanel.server.models.dtos.PageContentDTO;
-import io.github.ardonplay.infopanel.server.models.dtos.PageDTO;
-import io.github.ardonplay.infopanel.server.models.dtos.PageFolderDTO;
+import io.github.ardonplay.infopanel.server.common.entities.*;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.models.contentElements.TextElement;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.dtos.PageContentDTO;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.dtos.PageDTO;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.dtos.PageFolderDTO;
 import io.github.ardonplay.infopanel.server.models.entities.*;
-import io.github.ardonplay.infopanel.server.models.enums.PageElementType;
-import io.github.ardonplay.infopanel.server.models.enums.PageType;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.models.enums.PageElementType;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.models.enums.PageType;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.services.mappers.PageMapper;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

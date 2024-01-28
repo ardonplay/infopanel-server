@@ -1,13 +1,17 @@
 package io.github.ardonplay.infopanel.server.services;
 
-import io.github.ardonplay.infopanel.server.models.contentElements.TextElement;
-import io.github.ardonplay.infopanel.server.models.dtos.PageContentDTO;
-import io.github.ardonplay.infopanel.server.models.dtos.PageDTO;
-import io.github.ardonplay.infopanel.server.models.dtos.PageFolderDTO;
+import io.github.ardonplay.infopanel.server.common.entities.*;
+import io.github.ardonplay.infopanel.server.common.services.TypeCacheService;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.models.contentElements.TextElement;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.dtos.PageContentDTO;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.dtos.PageDTO;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.dtos.PageFolderDTO;
 import io.github.ardonplay.infopanel.server.models.entities.*;
-import io.github.ardonplay.infopanel.server.models.enums.PageElementType;
-import io.github.ardonplay.infopanel.server.models.enums.PageType;
-import io.github.ardonplay.infopanel.server.repositories.PageRepository;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.models.enums.PageElementType;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.models.enums.PageType;
+import io.github.ardonplay.infopanel.server.common.repositories.PageRepository;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.services.PageContentService;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.services.PageService;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;

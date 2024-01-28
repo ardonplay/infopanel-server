@@ -1,14 +1,13 @@
 package io.github.ardonplay.infopanel.server.controllers;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.ardonplay.infopanel.server.models.contentElements.TextElement;
-import io.github.ardonplay.infopanel.server.models.dtos.PageContentDTO;
-import io.github.ardonplay.infopanel.server.models.dtos.PageDTO;
-import io.github.ardonplay.infopanel.server.models.dtos.PageFolderDTO;
-import io.github.ardonplay.infopanel.server.models.enums.PageElementType;
-import io.github.ardonplay.infopanel.server.models.enums.PageType;
-import io.github.ardonplay.infopanel.server.services.PageService;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.models.contentElements.TextElement;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.dtos.PageContentDTO;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.dtos.PageDTO;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.dtos.PageFolderDTO;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.models.enums.PageElementType;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.models.enums.PageType;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.services.PageService;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
