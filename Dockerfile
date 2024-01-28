@@ -5,4 +5,4 @@ CMD ["./gradlew", "clean", "bootJar"]
 COPY build/libs/*.jar app.jar
 
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar", "--spring.datasource.url=jdbc:postgresql://database:5432/infopanel"]
+ENTRYPOINT ["java", "-jar", "app.jar", "--spring.datasource.url=jdbc:postgresql://${DATABASE_CONTAINER_NAME}:${DATABASE_PORT}/${DATABASE_NAME}"]
