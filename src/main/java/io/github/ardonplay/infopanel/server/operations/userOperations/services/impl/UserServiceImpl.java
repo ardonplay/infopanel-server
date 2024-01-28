@@ -1,13 +1,18 @@
 package io.github.ardonplay.infopanel.server.operations.userOperations.services.impl;
 
-import io.github.ardonplay.infopanel.server.common.entities.User;
+import io.github.ardonplay.infopanel.server.common.entities.UserEntity;
+import io.github.ardonplay.infopanel.server.common.repositories.UserRepository;
+import io.github.ardonplay.infopanel.server.common.services.TypeCacheService;
 import io.github.ardonplay.infopanel.server.operations.userOperations.models.enums.UserRole;
 import io.github.ardonplay.infopanel.server.operations.userOperations.services.UserService;
+import io.github.ardonplay.infopanel.server.operations.userOperations.services.exceptions.UserAlreadyExistsException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -17,25 +22,44 @@ import java.util.*;
 @AllArgsConstructor
 public class UserServiceImpl implements UserService, UserDetailsService {
 
+    private final UserRepository userRepository;
+
+    private final TypeCacheService cacheService;
 
     @Override
-    public Optional<User> createUser(String username, String password, UserRole userRole) {
-        return Optional.empty();
+    public Optional<UserEntity> createUser(String username, String password, UserRole userRole) {
+
+        if (userRepository.findByUsername(username).isPresent()) {
+            throw new UserAlreadyExistsException("User already exist");
+        }
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(password);
+
+        UserEntity user = UserEntity.builder().username(username).password(hashedPassword).userRole(cacheService.getUserRoles().get(userRole.name())).build();
+
+        return Optional.of(userRepository.save(user));
     }
 
-    @Override
-    public Optional<String> getUserId(Integer id) {
-        return Optional.empty();
-    }
-
 
     @Override
-    public Optional<User> findByUsername(String username) {
-        return Optional.empty();
+    public Optional<UserEntity> findByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+        UserEntity user = findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(
+                String.format("User '%s' not found", username)
+        ));
+
+        List<GrantedAuthority> authorities = new ArrayList<>(Collections.emptyList());
+        authorities.add((GrantedAuthority) () -> user.getUserRole().getName());
+
+        // Convert our User to which Spring Security understand
+        return new org.springframework.security.core.userdetails.User(
+                user.getUsername(),
+                user.getPassword(),
+                authorities
+        );
     }
 }

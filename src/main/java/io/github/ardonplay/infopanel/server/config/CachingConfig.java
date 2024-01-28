@@ -11,6 +11,6 @@ import org.springframework.context.annotation.Configuration;
 public class CachingConfig {
     @Bean
     public CacheManager cacheManager() {
-        return new ConcurrentMapCacheManager("enum-types");
+        return new ConcurrentMapCacheManager("page_element_types", "page_types", "user_roles");
     }
 }

@@ -1,7 +1,7 @@
 
 package io.github.ardonplay.infopanel.server.operations.userOperations.services;
 
-import io.github.ardonplay.infopanel.server.common.entities.User;
+import io.github.ardonplay.infopanel.server.common.entities.UserEntity;
 import io.github.ardonplay.infopanel.server.operations.userOperations.models.enums.UserRole;
 
 
@@ -19,12 +19,9 @@ public interface UserService {
      * @param userRole is user's privilege
      * @return ScUser which contains unique strUUID in memory, username, password and user's privilege
      */
-    Optional<User> createUser(String username, String password, UserRole userRole);
+    Optional<UserEntity> createUser(String username, String password, UserRole userRole);
 
-    Optional<String> getUserId(Integer id);
-
-
-    Optional<User> findByUsername(String username);
+    Optional<UserEntity> findByUsername(String username);
 
 }
 

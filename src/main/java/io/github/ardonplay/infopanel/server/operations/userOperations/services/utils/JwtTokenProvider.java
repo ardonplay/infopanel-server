@@ -1,7 +1,7 @@
 package io.github.ardonplay.infopanel.server.operations.userOperations.services.utils;
 
 
-import io.github.ardonplay.infopanel.server.common.entities.User;
+import io.github.ardonplay.infopanel.server.common.entities.UserEntity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -24,12 +24,12 @@ public class JwtTokenProvider {
     @Value("${jwt.lifetime}")
     private Duration jwtLifetime;
 
-    public String generateToken(User user) {
+    public String generateToken(UserEntity user) {
         Map<String, Object> claims = new HashMap<>();
         // payload
         claims.put("id", user.getId());
         claims.put("username", user.getUsername());
-        claims.put("role", user.getUserRole());
+        claims.put("role", user.getUserRole().getName());
 
         var issuedDate = new Date();
         var expiredDate = new Date(issuedDate.getTime() + jwtLifetime.toMillis());

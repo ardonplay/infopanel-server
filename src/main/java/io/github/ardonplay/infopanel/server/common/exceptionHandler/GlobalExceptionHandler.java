@@ -1,6 +1,7 @@
 package io.github.ardonplay.infopanel.server.common.exceptionHandler;
 
 import io.github.ardonplay.infopanel.server.common.errorsResponse.ApiErrorInfo;
+import io.github.ardonplay.infopanel.server.operations.userOperations.services.exceptions.UserAlreadyExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +32,14 @@ public class GlobalExceptionHandler {
     ApiErrorInfo
     handlePageNotFoundException(HttpServletRequest req, Exception ex) {
         return new ApiErrorInfo(HttpStatus.BAD_REQUEST.value(), req.getRequestURL(), ex.getMessage());
+    }
+
+    @ResponseStatus(value = HttpStatus.CONFLICT)
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    @ResponseBody
+    ApiErrorInfo
+    handleUserAlreadyExistException(HttpServletRequest req, Exception ex) {
+        return new ApiErrorInfo(HttpStatus.CONFLICT.value(), req.getRequestURL(), ex.getMessage());
     }
 
     @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
