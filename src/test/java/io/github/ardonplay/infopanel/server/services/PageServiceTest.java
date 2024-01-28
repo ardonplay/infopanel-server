@@ -6,7 +6,6 @@ import io.github.ardonplay.infopanel.server.operations.pageOperations.models.con
 import io.github.ardonplay.infopanel.server.operations.pageOperations.dtos.PageContentDTO;
 import io.github.ardonplay.infopanel.server.operations.pageOperations.dtos.PageDTO;
 import io.github.ardonplay.infopanel.server.operations.pageOperations.dtos.PageFolderDTO;
-import io.github.ardonplay.infopanel.server.models.entities.*;
 import io.github.ardonplay.infopanel.server.operations.pageOperations.models.enums.PageElementType;
 import io.github.ardonplay.infopanel.server.operations.pageOperations.models.enums.PageType;
 import io.github.ardonplay.infopanel.server.common.repositories.PageRepository;

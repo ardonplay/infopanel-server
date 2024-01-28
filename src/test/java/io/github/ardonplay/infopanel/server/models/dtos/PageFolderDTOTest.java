@@ -13,8 +13,10 @@ import java.util.List;
 
 public class PageFolderDTOTest {
 
+
     @Test
     void equals(){
+
         PageContentDTO contentDTO = PageContentDTO.builder().type(PageElementType.TEXT).body(TextElement.builder().content("Test content").build().toJsonNode()).build();
 
         PageDTO pageDTO = PageDTO.builder().id(1).type(PageType.PAGE.name()).title("First test page DTO").parentId(2).orderId(1).content(List.of(contentDTO)).build();
