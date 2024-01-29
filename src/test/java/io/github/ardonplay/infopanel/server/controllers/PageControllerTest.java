@@ -11,20 +11,22 @@ import io.github.ardonplay.infopanel.server.operations.pageOperations.services.P
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
+import org.testcontainers.containers.MinIOContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 
 
 import java.util.List;
+import java.util.Map;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -37,32 +39,44 @@ public class PageControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    public static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:15.3").withInitScript("init.sql");
+    @MockBean
+    private PageService pageService;
+
+    static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:15.3")
+            .withInitScript("init.sql")
+            .withDatabaseName("infopanel")
+            .withUsername("postgres")
+            .withPassword("postgres")
+            .withExposedPorts(5432);
+
+    static MinIOContainer minIOContainer =  new MinIOContainer("minio/minio")
+            .withExposedPorts(9000, 9001)
+            .withEnv(Map.of("MINIO_ACCESS_KEY", "minio1234567890",
+                    "MINIO_SECRET_KEY", "minio1234567890"));
 
 
     @BeforeAll
     static void beforeAll() {
-        postgres.start();
+        postgreSQLContainer.start();
+        minIOContainer.start();
     }
 
     @AfterAll
     static void afterAll() {
-        postgres.stop();
+       postgreSQLContainer.start();
+       minIOContainer.stop();
     }
 
     @DynamicPropertySource
     static void configureProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url", postgres::getJdbcUrl);
-        registry.add("spring.datasource.username", postgres::getUsername);
-        registry.add("spring.datasource.password", postgres::getPassword);
-    }
+        registry.add("spring.datasource.url", postgreSQLContainer::getJdbcUrl);
+        registry.add("spring.datasource.username", postgreSQLContainer::getUsername);
+        registry.add("spring.datasource.password", postgreSQLContainer::getPassword);
 
-    @MockBean
-    private PageService pageService;
-
-    @BeforeEach
-    public void SetUp() {
-
+        registry.add("minio.url", minIOContainer::getS3URL);
+        registry.add("minio.accessKey", () -> "minio1234567890");
+        registry.add("minio.secretKey", () -> "minio1234567890");
+        registry.add("minio.bucket", () -> "resources");
     }
 
     @Test

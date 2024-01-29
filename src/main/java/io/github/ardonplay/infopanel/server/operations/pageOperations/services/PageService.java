@@ -1,11 +1,13 @@
 package io.github.ardonplay.infopanel.server.operations.pageOperations.services;
 
+import io.github.ardonplay.infopanel.server.operations.pageOperations.dtos.PageContentDTO;
 import io.github.ardonplay.infopanel.server.operations.pageOperations.dtos.PageDTO;
 import io.github.ardonplay.infopanel.server.operations.pageOperations.dtos.PageFolderDTO;
 import io.github.ardonplay.infopanel.server.common.entities.PageContent;
 import io.github.ardonplay.infopanel.server.common.entities.PageContentOrder;
 import io.github.ardonplay.infopanel.server.common.entities.PageEntity;
 import io.github.ardonplay.infopanel.server.common.entities.PageTypeEntity;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.exceptions.PageContentIsNullException;
 import io.github.ardonplay.infopanel.server.operations.pageOperations.models.enums.PageType;
 import io.github.ardonplay.infopanel.server.common.repositories.PageRepository;
 import io.github.ardonplay.infopanel.server.common.services.TypeCacheService;
@@ -124,7 +126,7 @@ public class PageService {
                 return saveFolderPage(page, (PageFolderDTO) pageDTO);
             }
             case PAGE -> {
-                return saveContentPage(page, pageDTO);
+                return saveContentPage(page, pageDTO.getContent());
             }
             default -> {
                 return null;
@@ -161,8 +163,11 @@ public class PageService {
         return mapper.mapToFolder(page);
     }
 
-    private PageDTO saveContentPage(PageEntity page, PageDTO pageDTO) {
-        List<PageContent> contents = pageContentService.updateByDTO(page, pageDTO.getContent());
+    private PageDTO saveContentPage(PageEntity page, List<PageContentDTO> pageContentDTOS) throws PageContentIsNullException {
+        if(pageContentDTOS == null){
+            throw new PageContentIsNullException();
+        }
+        List<PageContent> contents = pageContentService.updateByDTO(page, pageContentDTOS);
         pageRepository.save(page);
         PageDTO result = mapper.mapToPageDTO(page);
         result.setContent(contents.stream().map(mapper::mapContentToDTO).toList());

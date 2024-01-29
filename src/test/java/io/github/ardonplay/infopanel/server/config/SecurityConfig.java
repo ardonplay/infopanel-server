@@ -1,9 +1,8 @@
 package io.github.ardonplay.infopanel.server.config;
 
 import lombok.AllArgsConstructor;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -19,23 +18,13 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-@Configuration
+@TestConfiguration
 @EnableWebSecurity
 @AllArgsConstructor
 @EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
-    //TODO think about user routes and admin routes
 
     private final UserDetailsService userDetailsService;
-
-    private final String[] WHITE_LIST_URLs = {
-            "/api/v1/page/**"
-    };
-
-    private final String[] AUTH_LIST_URLs = {
-            "/api/v1/signup",
-            "/api/v1/auth",
-    };
 
 
     @Bean
@@ -65,11 +54,8 @@ public class SecurityConfig {
                 )
 
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers(HttpMethod.GET, WHITE_LIST_URLs).permitAll()
-                        .requestMatchers(HttpMethod.POST, AUTH_LIST_URLs).permitAll()
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
-                // For REST: no cookie, so we disable them
                 .exceptionHandling(
                         (exceptionHandling) -> exceptionHandling
                                 .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
