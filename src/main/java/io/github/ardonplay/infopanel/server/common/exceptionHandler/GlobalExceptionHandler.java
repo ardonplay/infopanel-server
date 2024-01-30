@@ -2,6 +2,7 @@ package io.github.ardonplay.infopanel.server.common.exceptionHandler;
 
 import io.github.ardonplay.infopanel.server.common.errorsResponse.ApiErrorInfo;
 import io.github.ardonplay.infopanel.server.operations.userOperations.services.exceptions.UserAlreadyExistsException;
+import io.github.ardonplay.infopanel.server.operations.userOperations.services.exceptions.UserAuthenticationException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -43,7 +44,7 @@ public class GlobalExceptionHandler {
     }
 
     @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
-    @ExceptionHandler(AuthenticationException.class)
+    @ExceptionHandler(UserAuthenticationException.class)
     @ResponseBody
     ApiErrorInfo
     handleUserAuthenticationException(HttpServletRequest req, Exception ex) {
