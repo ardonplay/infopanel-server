@@ -30,4 +30,6 @@ INSERT INTO "page_content_order" ("page_id", "content_id", "order_id")
 VALUES
     (
         2, 1, 1
-    )
+    );
+
+INSERT INTO "users" ("username", "pass", "role") VALUES ('spring_test', '$2a$10$CLr/RDfqSa1qpzevy6I2oeV73M/OlULtVA41gX5mBOg66cO2jovtq', 1)

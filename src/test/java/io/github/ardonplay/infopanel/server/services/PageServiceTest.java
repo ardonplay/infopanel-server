@@ -1,13 +1,16 @@
 package io.github.ardonplay.infopanel.server.services;
 
-import io.github.ardonplay.infopanel.server.models.contentElements.TextElement;
-import io.github.ardonplay.infopanel.server.models.dtos.PageContentDTO;
-import io.github.ardonplay.infopanel.server.models.dtos.PageDTO;
-import io.github.ardonplay.infopanel.server.models.dtos.PageFolderDTO;
-import io.github.ardonplay.infopanel.server.models.entities.*;
-import io.github.ardonplay.infopanel.server.models.enums.PageElementType;
-import io.github.ardonplay.infopanel.server.models.enums.PageType;
-import io.github.ardonplay.infopanel.server.repositories.PageRepository;
+import io.github.ardonplay.infopanel.server.common.entities.*;
+import io.github.ardonplay.infopanel.server.common.services.TypeCacheService;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.models.contentElements.TextElement;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.dtos.PageContentDTO;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.dtos.PageDTO;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.dtos.PageFolderDTO;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.models.enums.PageElementType;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.models.enums.PageType;
+import io.github.ardonplay.infopanel.server.common.repositories.PageRepository;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.services.PageContentService;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.services.PageService;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -18,10 +21,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
+import org.testcontainers.containers.MinIOContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 
 import static org.mockito.Mockito.*;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @SpringBootTest
@@ -40,25 +45,43 @@ public class PageServiceTest {
     @MockBean
     private TypeCacheService cacheService;
 
-    public static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:15.3").withInitScript("init.sql");
+    static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:15.3")
+            .withInitScript("init.sql")
+            .withDatabaseName("infopanel")
+            .withUsername("postgres")
+            .withPassword("postgres")
+            .withExposedPorts(5432);
+
+    static MinIOContainer minIOContainer =  new MinIOContainer("minio/minio")
+            .withExposedPorts(9000, 9001)
+            .withEnv(Map.of("MINIO_ACCESS_KEY", "minio1234567890",
+                    "MINIO_SECRET_KEY", "minio1234567890"));
 
 
     @BeforeAll
     static void beforeAll() {
-        postgres.start();
+        postgreSQLContainer.start();
+        minIOContainer.start();
     }
 
     @AfterAll
     static void afterAll() {
-        postgres.stop();
+        postgreSQLContainer.start();
+        minIOContainer.stop();
     }
 
     @DynamicPropertySource
     static void configureProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url", postgres::getJdbcUrl);
-        registry.add("spring.datasource.username", postgres::getUsername);
-        registry.add("spring.datasource.password", postgres::getPassword);
+        registry.add("spring.datasource.url", postgreSQLContainer::getJdbcUrl);
+        registry.add("spring.datasource.username", postgreSQLContainer::getUsername);
+        registry.add("spring.datasource.password", postgreSQLContainer::getPassword);
+
+        registry.add("minio.url", minIOContainer::getS3URL);
+        registry.add("minio.accessKey", () -> "minio1234567890");
+        registry.add("minio.secretKey", () -> "minio1234567890");
+        registry.add("minio.bucket", () -> "resources");
     }
+
     @Test
     void getPage_page(){
         int pageId = 2;
