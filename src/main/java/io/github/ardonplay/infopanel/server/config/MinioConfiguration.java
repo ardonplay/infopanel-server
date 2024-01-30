@@ -4,6 +4,7 @@ import io.minio.BucketExistsArgs;
 import io.minio.MakeBucketArgs;
 import io.minio.MinioClient;
 import io.minio.errors.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +14,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
 @Configuration
+@Slf4j
 public class MinioConfiguration {
     @Value("${minio.url}")
     private String minioUrl;
@@ -33,7 +35,7 @@ public class MinioConfiguration {
                 .credentials(accessKey, secretKey)
                 .build();
 
-        System.out.println("BUCKET_NAME: " + BUCKET_NAME);
+        log.info("BUCKET_NAME: {}", BUCKET_NAME);
         boolean isBucketExist = client.bucketExists(BucketExistsArgs.builder().bucket(BUCKET_NAME).build());
 
         if (!isBucketExist) {

@@ -28,14 +28,16 @@ public class SecurityConfig {
 
     private final UserDetailsService userDetailsService;
 
-    private final String[] WHITE_LIST_URLs = {
-            "/api/v1/page/**"
+    private final String[] GET_LIST_URLs = {
+            "/api/v1/page/**",
+            "/api/v1/resource/{id}"
     };
 
-    private final String[] AUTH_LIST_URLs = {
+    private final String[] POST_LIST_URLs = {
             "/api/v1/signup",
-            "/api/v1/auth",
+            "/api/v1/auth"
     };
+
 
 
     @Bean
@@ -65,9 +67,10 @@ public class SecurityConfig {
                 )
 
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers(HttpMethod.GET, WHITE_LIST_URLs).permitAll()
-                        .requestMatchers(HttpMethod.POST, AUTH_LIST_URLs).permitAll()
-                        .anyRequest().authenticated()
+                                .requestMatchers(HttpMethod.GET, GET_LIST_URLs).permitAll()
+                                .requestMatchers(HttpMethod.POST, POST_LIST_URLs).permitAll()
+//                        .requestMatchers("/actuator/**").permitAll()
+                                .anyRequest().authenticated()
                 )
                 // For REST: no cookie, so we disable them
                 .exceptionHandling(
