@@ -1,6 +1,7 @@
 package io.github.ardonplay.infopanel.server.operations.uploadOperations.services.impl;
 
-import io.github.ardonplay.infopanel.server.common.exceptions.ResourceAlreadyExistException;
+import io.github.ardonplay.infopanel.server.operations.uploadOperations.exceptions.ResourceAlreadyExistException;
+import io.github.ardonplay.infopanel.server.operations.uploadOperations.exceptions.ResourceException;
 import io.github.ardonplay.infopanel.server.operations.uploadOperations.models.Resource;
 import io.github.ardonplay.infopanel.server.operations.uploadOperations.services.StorageService;
 import io.minio.*;
@@ -45,7 +46,7 @@ public class MinioServiceImpl implements StorageService {
     }
 
     @Override
-    public void putFile(String hash, MultipartFile multipartFile) throws ResourceAlreadyExistException {
+    public void putFile(String hash, MultipartFile multipartFile) throws ResourceAlreadyExistException, ResourceException {
         try {
 
             InputStream inputStream = multipartFile.getInputStream();
@@ -55,13 +56,29 @@ public class MinioServiceImpl implements StorageService {
                         .object(hash)
                         .contentType(multipartFile.getContentType())
                         .stream(inputStream, inputStream.available(), -1).build());
+                inputStream.close();
             } else {
+                inputStream.close();
                 throw new ResourceAlreadyExistException("File already exist at MinIO");
             }
-            inputStream.close();
+        } catch (ResourceAlreadyExistException e) {
+            throw e;
         } catch (Exception e) {
-            throw new RuntimeException("Failed to upload file to MinIO", e);
+            throw new ResourceException("Failed to upload file to MinIO", e);
         }
+    }
+
+    @Override
+    public void deleteFile(String hash) {
+        try {
+            minio.removeObject(RemoveObjectArgs.builder()
+                    .bucket(BUCKET_NAME)
+                    .object(hash)
+                    .build());
+        } catch (Exception e) {
+            throw new ResourceException("Failed to delete file", e);
+        }
+
     }
 
 

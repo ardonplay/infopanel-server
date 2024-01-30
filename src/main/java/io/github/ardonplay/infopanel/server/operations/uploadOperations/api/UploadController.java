@@ -46,7 +46,7 @@ public class UploadController {
             long fileTime = System.currentTimeMillis();
             log.info("START [upload][file]");
             var id = resourcesService.uploadResource(file);
-            result.append(id).append('\n');
+            result.append(id);
             log.info("FINISH [upload][file] [{}]", System.currentTimeMillis() - fileTime);
         }
         log.info("FINISH [upload] [{}]", System.currentTimeMillis() - time);

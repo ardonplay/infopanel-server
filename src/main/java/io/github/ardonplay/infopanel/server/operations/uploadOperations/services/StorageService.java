@@ -11,5 +11,7 @@ public interface StorageService {
 
     void putFile(String hash, MultipartFile multipartFile);
 
+    void deleteFile(String hash);
+
     Iterable<Result<Item>> getAllFiles();
 }

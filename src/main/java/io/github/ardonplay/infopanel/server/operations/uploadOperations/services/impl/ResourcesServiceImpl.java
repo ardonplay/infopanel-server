@@ -1,7 +1,8 @@
 package io.github.ardonplay.infopanel.server.operations.uploadOperations.services.impl;
 
-import io.github.ardonplay.infopanel.server.common.exceptions.ResourceAlreadyExistException;
+import io.github.ardonplay.infopanel.server.operations.uploadOperations.exceptions.ResourceAlreadyExistException;
 import io.github.ardonplay.infopanel.server.operations.uploadOperations.exceptions.ResourceException;
+import io.github.ardonplay.infopanel.server.operations.uploadOperations.exceptions.ResourceNotExistException;
 import io.github.ardonplay.infopanel.server.operations.uploadOperations.models.Resource;
 import io.github.ardonplay.infopanel.server.operations.uploadOperations.services.StorageService;
 import io.github.ardonplay.infopanel.server.operations.uploadOperations.services.ResourcesService;
@@ -41,7 +42,7 @@ public class ResourcesServiceImpl implements ResourcesService {
     }
 
 
-    private void syncWithStorage(String hash, MultipartFile multipartFile) throws IOException, MinioException {
+    private void syncWithStorage(String hash, MultipartFile multipartFile) throws IOException, MinioException, ResourceAlreadyExistException {
         storageService.putFile(hash, multipartFile);
     }
 
@@ -50,7 +51,7 @@ public class ResourcesServiceImpl implements ResourcesService {
         try {
             return storageService.getFile(hash);
         } catch (RuntimeException e) {
-            throw new ResourceException("Can't load this resource", e);
+            throw new ResourceNotExistException("Can't load this resource", e);
         }
     }
 }

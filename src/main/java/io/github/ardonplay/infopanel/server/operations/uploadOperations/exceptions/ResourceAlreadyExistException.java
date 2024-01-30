@@ -1,6 +1,6 @@
-package io.github.ardonplay.infopanel.server.common.exceptions;
+package io.github.ardonplay.infopanel.server.operations.uploadOperations.exceptions;
 
-public class ResourceAlreadyExistException extends RuntimeException{
+public class ResourceAlreadyExistException extends ResourceException{
     public ResourceAlreadyExistException() {
     }
 
