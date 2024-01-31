@@ -1,5 +1,7 @@
-package io.github.ardonplay.infopanel.server.common.entities;
+package io.github.ardonplay.infopanel.server.common.entities.page;
 
+import io.github.ardonplay.infopanel.server.common.entities.pageContent.PageContentOrder;
+import io.github.ardonplay.infopanel.server.common.entities.types.PageTypeEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.List;
@@ -16,9 +18,6 @@ public class PageEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-
-    @Column(name = "title")
-    private String title;
 
     @Column(name = "order_id")
     private Integer orderId;
@@ -37,9 +36,12 @@ public class PageEntity {
     @OneToMany(mappedBy = "page", cascade = {CascadeType.ALL}, orphanRemoval = true)
     private List<PageContentOrder> contentOrders;
 
+    @OneToMany(mappedBy = "page", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    private List<PageLocalization> localizations;
+
     @Override
     public String toString(){
-        return String.format("{ page: { id: %s, title: %s, pageType:  %s, order: %s } }", id, title, pageType.getName(), orderId);
+        return String.format("{ page: { id: %s, title: %s, pageType:  %s, order: %s } }", id, localizations.toString(), pageType.getName(), orderId);
     }
 
     @Override
@@ -47,11 +49,11 @@ public class PageEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PageEntity page = (PageEntity) o;
-        return Objects.equals(title, page.title) && Objects.equals(orderId, page.orderId) && Objects.equals(parentPage, page.parentPage) && Objects.equals(children, page.children) && Objects.equals(pageType, page.pageType) && Objects.equals(contentOrders, page.contentOrders);
+        return Objects.equals(localizations, page.localizations) && Objects.equals(orderId, page.orderId) && Objects.equals(parentPage, page.parentPage) && Objects.equals(children, page.children) && Objects.equals(pageType, page.pageType) && Objects.equals(contentOrders, page.contentOrders);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, orderId, parentPage, children, pageType, contentOrders);
+        return Objects.hash(localizations, orderId, parentPage, children, pageType, contentOrders);
     }
 }

@@ -3,9 +3,9 @@ package io.github.ardonplay.infopanel.server.operations.pageOperations.services;
 import com.fasterxml.jackson.databind.JsonNode;
 import io.github.ardonplay.infopanel.server.common.models.Pair;
 import io.github.ardonplay.infopanel.server.operations.pageOperations.dtos.PageContentDTO;
-import io.github.ardonplay.infopanel.server.common.entities.PageContent;
-import io.github.ardonplay.infopanel.server.common.entities.PageEntity;
-import io.github.ardonplay.infopanel.server.common.entities.PageContentOrder;
+import io.github.ardonplay.infopanel.server.common.entities.pageContent.PageContent;
+import io.github.ardonplay.infopanel.server.common.entities.page.PageEntity;
+import io.github.ardonplay.infopanel.server.common.entities.pageContent.PageContentOrder;
 import io.github.ardonplay.infopanel.server.operations.pageOperations.models.enums.PageElementType;
 import io.github.ardonplay.infopanel.server.common.repositories.PageContentRepository;
 import io.github.ardonplay.infopanel.server.common.services.TypeCacheService;
@@ -29,8 +29,8 @@ public class PageContentService {
     public List<PageContent> getAllByContentPairs(List<Pair<PageElementType, JsonNode>> contentPairs) {
         return pageContentRepository
                 .findPageContentsByPageElementTypeAndBody(
-                        contentPairs.stream().map(pair -> pair.first().name()).toList(),
-                        contentPairs.stream().map(Pair::second).toList());
+                        contentPairs.stream().map(pair -> pair.first().name()).toList());
+//                        contentPairs.stream().map(Pair::second).toList());
     }
 
     @Transactional
@@ -39,9 +39,9 @@ public class PageContentService {
 
         for (Pair<PageElementType, JsonNode> pair : contentPairs) {
             if (!pageContentRepository.containsPair(result, pair)) {
-                PageContent pageContent = new PageContent(cacheService.getPageElementTypes().get(pair.first().name()), pair.second());
-                pageContent = pageContentRepository.save(pageContent);
-                result.add(pageContent);
+//                PageContent pageContent = new PageContent(cacheService.getPageElementTypes().get(pair.first().name()), pair.second());
+//                pageContent = pageContentRepository.save(pageContent);
+//                result.add(pageContent);
             }
         }
         return result;

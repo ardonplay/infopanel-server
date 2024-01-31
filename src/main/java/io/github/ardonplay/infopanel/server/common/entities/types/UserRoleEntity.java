@@ -1,6 +1,6 @@
-package io.github.ardonplay.infopanel.server.common.entities;
+package io.github.ardonplay.infopanel.server.common.entities.types;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import io.github.ardonplay.infopanel.server.common.entities.user.UserEntity;
 import io.github.ardonplay.infopanel.server.operations.pageOperations.models.enums.UserType;
 import jakarta.persistence.*;
 import lombok.*;

@@ -1,7 +1,7 @@
 package io.github.ardonplay.infopanel.server.operations.userOperations.services.utils;
 
 
-import io.github.ardonplay.infopanel.server.common.entities.UserEntity;
+import io.github.ardonplay.infopanel.server.common.entities.user.UserEntity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

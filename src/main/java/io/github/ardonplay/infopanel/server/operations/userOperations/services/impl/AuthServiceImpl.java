@@ -1,7 +1,7 @@
 package io.github.ardonplay.infopanel.server.operations.userOperations.services.impl;
 
 
-import io.github.ardonplay.infopanel.server.common.entities.UserEntity;
+import io.github.ardonplay.infopanel.server.common.entities.user.UserEntity;
 import io.github.ardonplay.infopanel.server.operations.userOperations.dtos.AuthRequest;
 import io.github.ardonplay.infopanel.server.operations.userOperations.dtos.JwtResponse;
 import io.github.ardonplay.infopanel.server.operations.userOperations.dtos.SignUpRequest;

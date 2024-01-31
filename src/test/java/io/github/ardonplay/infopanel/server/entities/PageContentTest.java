@@ -1,6 +1,6 @@
 package io.github.ardonplay.infopanel.server.entities;
 
-import io.github.ardonplay.infopanel.server.common.entities.PageContent;
+import io.github.ardonplay.infopanel.server.common.entities.pageContent.PageContent;
 import io.github.ardonplay.infopanel.server.operations.pageOperations.models.contentElements.TextElement;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

@@ -1,6 +1,6 @@
 package io.github.ardonplay.infopanel.server.operations.userOperations.services.impl;
 
-import io.github.ardonplay.infopanel.server.common.entities.UserEntity;
+import io.github.ardonplay.infopanel.server.common.entities.user.UserEntity;
 import io.github.ardonplay.infopanel.server.common.repositories.UserRepository;
 import io.github.ardonplay.infopanel.server.common.services.TypeCacheService;
 import io.github.ardonplay.infopanel.server.operations.userOperations.models.enums.UserRole;

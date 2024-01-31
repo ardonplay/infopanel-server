@@ -2,9 +2,9 @@ package io.github.ardonplay.infopanel.server.operations.pageOperations.services;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import io.github.ardonplay.infopanel.server.common.models.Pair;
-import io.github.ardonplay.infopanel.server.common.entities.PageContent;
-import io.github.ardonplay.infopanel.server.common.entities.PageContentOrder;
-import io.github.ardonplay.infopanel.server.common.entities.PageEntity;
+import io.github.ardonplay.infopanel.server.common.entities.pageContent.PageContent;
+import io.github.ardonplay.infopanel.server.common.entities.pageContent.PageContentOrder;
+import io.github.ardonplay.infopanel.server.common.entities.page.PageEntity;
 import io.github.ardonplay.infopanel.server.operations.pageOperations.models.enums.PageElementType;
 import io.github.ardonplay.infopanel.server.common.repositories.PageContentOrderRepository;
 import jakarta.transaction.Transactional;
@@ -39,7 +39,7 @@ public class PageContentOrderService {
                         (order.getPageContent().getPageElementType().getName()),
                         order.getPageContent().getBody())), order));
 
-        return oldOrderMap;
+       return oldOrderMap;
     }
 
     private Map<Pair<PageElementType, JsonNode>, PageContent> createPageContentMap(List<PageContent> pageContents) {

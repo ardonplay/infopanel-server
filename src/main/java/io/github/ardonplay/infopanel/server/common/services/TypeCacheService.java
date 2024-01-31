@@ -1,8 +1,8 @@
 package io.github.ardonplay.infopanel.server.common.services;
 
-import io.github.ardonplay.infopanel.server.common.entities.PageElementTypeEntity;
-import io.github.ardonplay.infopanel.server.common.entities.PageTypeEntity;
-import io.github.ardonplay.infopanel.server.common.entities.UserRoleEntity;
+import io.github.ardonplay.infopanel.server.common.entities.types.PageElementTypeEntity;
+import io.github.ardonplay.infopanel.server.common.entities.types.PageTypeEntity;
+import io.github.ardonplay.infopanel.server.common.entities.types.UserRoleEntity;
 import io.github.ardonplay.infopanel.server.common.repositories.PageElementTypeRepository;
 import io.github.ardonplay.infopanel.server.common.repositories.PageTypeRepository;
 import io.github.ardonplay.infopanel.server.common.repositories.UserRoleRepository;

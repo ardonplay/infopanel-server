@@ -1,5 +1,6 @@
-package io.github.ardonplay.infopanel.server.common.entities;
+package io.github.ardonplay.infopanel.server.common.entities.types;
 
+import io.github.ardonplay.infopanel.server.common.entities.page.PageEntity;
 import io.github.ardonplay.infopanel.server.operations.pageOperations.models.enums.PageType;
 import jakarta.persistence.*;
 import lombok.*;

@@ -3,10 +3,10 @@ package io.github.ardonplay.infopanel.server.operations.pageOperations.services;
 import io.github.ardonplay.infopanel.server.operations.pageOperations.dtos.PageContentDTO;
 import io.github.ardonplay.infopanel.server.operations.pageOperations.dtos.PageDTO;
 import io.github.ardonplay.infopanel.server.operations.pageOperations.dtos.PageFolderDTO;
-import io.github.ardonplay.infopanel.server.common.entities.PageContent;
-import io.github.ardonplay.infopanel.server.common.entities.PageContentOrder;
-import io.github.ardonplay.infopanel.server.common.entities.PageEntity;
-import io.github.ardonplay.infopanel.server.common.entities.PageTypeEntity;
+import io.github.ardonplay.infopanel.server.common.entities.pageContent.PageContent;
+import io.github.ardonplay.infopanel.server.common.entities.pageContent.PageContentOrder;
+import io.github.ardonplay.infopanel.server.common.entities.page.PageEntity;
+import io.github.ardonplay.infopanel.server.common.entities.types.PageTypeEntity;
 import io.github.ardonplay.infopanel.server.operations.pageOperations.exceptions.PageContentIsNullException;
 import io.github.ardonplay.infopanel.server.operations.pageOperations.models.enums.PageType;
 import io.github.ardonplay.infopanel.server.common.repositories.PageRepository;
@@ -96,7 +96,7 @@ public class PageService {
 
     private void updateTitle(PageDTO pageDTO, PageEntity page) {
         if (pageDTO.getTitle() != null) {
-            page.setTitle(pageDTO.getTitle());
+//            page.setTitle(pageDTO.getTitle());
         }
     }
 
@@ -136,7 +136,7 @@ public class PageService {
 
     private PageEntity createPageEntityFromDTO(PageDTO pageDTO) {
         PageEntity page = new PageEntity();
-        page.setTitle(pageDTO.getTitle());
+//        page.setTitle(pageDTO.getTitle());
         PageTypeEntity pageTypeEntity = cacheService.getPageTypes().get(pageDTO.getType());
         page.setPageType(pageTypeEntity);
         page.setOrderId(pageDTO.getOrderId());

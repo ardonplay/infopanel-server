@@ -1,28 +1,17 @@
-name: Workflow for Codecov example-java-maven
-on: [push,pull_request,workflow_dispatch]
+name: Codecov build and coverage test
+on: [push, pull_request, workflow_dispatch]
 jobs:
   run:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout server
         uses: actions/checkout@v4
 
-      - name: Checkout database
-        uses: actions/checkout@master
-        with:
-          repository: ardonplay/infopanel-database
-          token: ${{ secrets.DATABASE_PAT }}
-          path: 'database'
-          
-      - name: Run PostgreSQL initialization
-        working-directory: database
-        run: ./database.sh run -d
-
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
-          distribution: 'oracle'
+          distribution: "oracle"
           java-version: 17
       - name: Install dependencies, run tests, and collect coverage
         run: gradle build

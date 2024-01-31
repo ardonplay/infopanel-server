@@ -1,10 +1,8 @@
-package io.github.ardonplay.infopanel.server.common.entities;
+package io.github.ardonplay.infopanel.server.common.entities.pageContent;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import io.github.ardonplay.infopanel.server.common.entities.types.PageElementTypeEntity;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
 
 import java.util.List;
 import java.util.Objects;
@@ -22,9 +20,7 @@ public class PageContent {
     @Column(name = "id")
     private Integer id;
 
-    @JdbcTypeCode(SqlTypes.JSON)
-    @Column(name = "body", columnDefinition = "jsonb")
-    private JsonNode body;
+
 
     @ManyToOne()
     @JoinColumn(name = "element_type", referencedColumnName = "id")
@@ -33,16 +29,19 @@ public class PageContent {
     @OneToMany(mappedBy = "pageContent", cascade=CascadeType.ALL)
     private List<PageContentOrder> orders;
 
-    public PageContent(PageElementTypeEntity pageElementTypeEntity, JsonNode body) {
+    @OneToMany(mappedBy = "content", cascade=CascadeType.ALL)
+    private List<PageContentLocalization> localizations;
+
+
+    public PageContent(PageElementTypeEntity pageElementTypeEntity) {
         this.pageElementType = pageElementTypeEntity;
-        this.body = body;
     }
 
     @Override
     public String toString() {
         return "PageContent{" +
                 "id=" + id +
-                ", body=" + body.toString() +
+                ", body=" + localizations.toString() +
                 ", type=" + pageElementType.getName() +
                 '}';
     }
@@ -52,11 +51,11 @@ public class PageContent {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PageContent content = (PageContent) o;
-        return Objects.equals(body, content.body) && Objects.equals(pageElementType, content.pageElementType);
+        return Objects.equals(localizations, content.localizations) && Objects.equals(pageElementType, content.pageElementType);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(body, pageElementType);
+        return Objects.hash(localizations, pageElementType);
     }
 }

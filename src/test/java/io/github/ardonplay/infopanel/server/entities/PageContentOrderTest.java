@@ -1,9 +1,9 @@
 package io.github.ardonplay.infopanel.server.entities;
 
-import io.github.ardonplay.infopanel.server.common.entities.PageContent;
-import io.github.ardonplay.infopanel.server.common.entities.PageContentOrder;
-import io.github.ardonplay.infopanel.server.common.entities.PageEntity;
-import io.github.ardonplay.infopanel.server.common.entities.PageTypeEntity;
+import io.github.ardonplay.infopanel.server.common.entities.pageContent.PageContent;
+import io.github.ardonplay.infopanel.server.common.entities.pageContent.PageContentOrder;
+import io.github.ardonplay.infopanel.server.common.entities.page.PageEntity;
+import io.github.ardonplay.infopanel.server.common.entities.types.PageTypeEntity;
 import io.github.ardonplay.infopanel.server.operations.pageOperations.models.contentElements.TextElement;
 import io.github.ardonplay.infopanel.server.operations.pageOperations.models.enums.PageType;
 import org.junit.jupiter.api.Assertions;

@@ -3,9 +3,9 @@ package io.github.ardonplay.infopanel.server.operations.pageOperations.services.
 import io.github.ardonplay.infopanel.server.operations.pageOperations.dtos.PageDTO;
 import io.github.ardonplay.infopanel.server.operations.pageOperations.dtos.PageContentDTO;
 import io.github.ardonplay.infopanel.server.operations.pageOperations.dtos.PageFolderDTO;
-import io.github.ardonplay.infopanel.server.common.entities.PageContent;
-import io.github.ardonplay.infopanel.server.common.entities.PageContentOrder;
-import io.github.ardonplay.infopanel.server.common.entities.PageEntity;
+import io.github.ardonplay.infopanel.server.common.entities.pageContent.PageContent;
+import io.github.ardonplay.infopanel.server.common.entities.pageContent.PageContentOrder;
+import io.github.ardonplay.infopanel.server.common.entities.page.PageEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -40,7 +40,7 @@ public interface PageMapper {
     PageContentDTO mapContentToDTO(PageContent source);
 
     @Mapping(target = "type", source = "pageContent.pageElementType.name")
-    @Mapping(target = "body", source = "pageContent.body")
+//    @Mapping(target = "body", source = "pageContent.body")
     @Named("mapOrderToContentDTO")
     PageContentDTO mapOrderToContentDTO(PageContentOrder source);
 }

@@ -1,6 +1,6 @@
 package io.github.ardonplay.infopanel.server.common.repositories;
 
-import io.github.ardonplay.infopanel.server.common.entities.PageContentOrder;
+import io.github.ardonplay.infopanel.server.common.entities.pageContent.PageContentOrder;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

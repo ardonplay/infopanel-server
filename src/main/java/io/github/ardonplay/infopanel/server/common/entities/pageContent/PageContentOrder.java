@@ -1,5 +1,6 @@
-package io.github.ardonplay.infopanel.server.common.entities;
+package io.github.ardonplay.infopanel.server.common.entities.pageContent;
 
+import io.github.ardonplay.infopanel.server.common.entities.page.PageEntity;
 import jakarta.persistence.*;
 import lombok.*;
 

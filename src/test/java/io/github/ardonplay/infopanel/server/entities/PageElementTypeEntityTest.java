@@ -1,6 +1,6 @@
 package io.github.ardonplay.infopanel.server.entities;
 
-import io.github.ardonplay.infopanel.server.common.entities.PageElementTypeEntity;
+import io.github.ardonplay.infopanel.server.common.entities.types.PageElementTypeEntity;
 import io.github.ardonplay.infopanel.server.operations.pageOperations.models.enums.PageElementType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
