@@ -10,7 +10,8 @@ import java.util.Objects;
 @Entity
 @Table(name = "pages")
 @Builder
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class PageEntity {
@@ -31,6 +32,7 @@ public class PageEntity {
 
     @ManyToOne()
     @JoinColumn(name = "type", referencedColumnName = "id")
+    @Enumerated(EnumType.STRING)
     private PageTypeEntity pageType;
 
     @OneToMany(mappedBy = "page", cascade = {CascadeType.ALL}, orphanRemoval = true)

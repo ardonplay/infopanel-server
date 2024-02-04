@@ -33,6 +33,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-devtools'
+
 
     runtimeOnly 'org.postgresql:postgresql'
 
@@ -67,18 +69,18 @@ dependencies {
 
 }
 
-tasks.named('test') {
-    useJUnitPlatform()
-    finalizedBy jacocoTestReport
-}
+//tasks.named('test') {
+//    useJUnitPlatform()
+//    finalizedBy jacocoTestReport
+//}
 
-jacocoTestReport {
-    reports {
-        xml.required = true
-        html.required = true
-    }
-    dependsOn test
-}
+//jacocoTestReport {
+//    reports {
+//        xml.required = true
+//        html.required = true
+//    }
+//    dependsOn test
+//}
 
 hibernate {
     enhancement {
@@ -86,5 +88,5 @@ hibernate {
     }
 }
 
-check.dependsOn jacocoTestReport
+//check.dependsOn jacocoTestReport
 

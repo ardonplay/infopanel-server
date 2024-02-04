@@ -5,13 +5,14 @@ import io.github.ardonplay.infopanel.server.common.entities.pageContent.PageCont
 import io.github.ardonplay.infopanel.server.common.entities.pageContent.PageContentOrder;
 import io.github.ardonplay.infopanel.server.common.entities.types.PageElementTypeEntity;
 import io.github.ardonplay.infopanel.server.common.entities.types.PageTypeEntity;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.dto.localized.LocalizedPageDTO;
 import io.github.ardonplay.infopanel.server.operations.pageOperations.models.contentElements.TextElement;
-import io.github.ardonplay.infopanel.server.operations.pageOperations.dtos.PageContentDTO;
-import io.github.ardonplay.infopanel.server.operations.pageOperations.dtos.PageDTO;
-import io.github.ardonplay.infopanel.server.operations.pageOperations.dtos.PageFolderDTO;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.dto.PageContentDTO;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.dto.PageDTO;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.dto.PageFolderDTO;
 import io.github.ardonplay.infopanel.server.operations.pageOperations.models.enums.PageElementType;
 import io.github.ardonplay.infopanel.server.operations.pageOperations.models.enums.PageType;
-import io.github.ardonplay.infopanel.server.operations.pageOperations.services.mappers.PageMapper;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.services.mappers.page.PageMapper;
 import io.github.ardonplay.infopanel.server.operations.pageOperations.services.mappers.PageMapperImpl;
 import org.junit.jupiter.api.*;
 import org.springframework.test.context.DynamicPropertyRegistry;
@@ -80,7 +81,7 @@ public class PageMapperTest {
         PageEntity pageEntity = PageEntity.builder().pageType(new PageTypeEntity(PageType.PAGE))
                 .id(1).title("Test page").orderId(1).build();
 
-        PageDTO pageDTO = pageMapper.mapToPageDTOWithoutContent(pageEntity);
+        LocalizedPageDTO pageDTO = pageMapper.mapToPageDTOWithoutContent(pageEntity);
 
         Assertions.assertEquals(expectedPageDTO, pageDTO);
     }

@@ -3,9 +3,9 @@ package io.github.ardonplay.infopanel.server.models.dtos;
 import io.github.ardonplay.infopanel.server.operations.pageOperations.models.contentElements.TextElement;
 import io.github.ardonplay.infopanel.server.operations.pageOperations.models.enums.PageElementType;
 import io.github.ardonplay.infopanel.server.operations.pageOperations.models.enums.PageType;
-import io.github.ardonplay.infopanel.server.operations.pageOperations.dtos.PageContentDTO;
-import io.github.ardonplay.infopanel.server.operations.pageOperations.dtos.PageDTO;
-import io.github.ardonplay.infopanel.server.operations.pageOperations.dtos.PageFolderDTO;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.dto.PageContentDTO;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.dto.PageDTO;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.dto.PageFolderDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

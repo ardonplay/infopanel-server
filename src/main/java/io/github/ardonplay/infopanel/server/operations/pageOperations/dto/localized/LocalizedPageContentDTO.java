@@ -1,11 +1,8 @@
-package io.github.ardonplay.infopanel.server.operations.pageOperations.dtos;
+package io.github.ardonplay.infopanel.server.operations.pageOperations.dto.localized;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import io.github.ardonplay.infopanel.server.operations.pageOperations.models.enums.PageElementType;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Objects;
 
@@ -13,15 +10,16 @@ import java.util.Objects;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PageContentDTO {
+public class LocalizedPageContentDTO {
     PageElementType type;
+
     JsonNode body;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PageContentDTO that = (PageContentDTO) o;
+        LocalizedPageContentDTO that = (LocalizedPageContentDTO) o;
         return Objects.equals(type, that.type) && Objects.equals(body, that.body);
     }
 

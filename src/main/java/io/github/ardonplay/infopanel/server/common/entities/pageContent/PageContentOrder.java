@@ -8,7 +8,6 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "page_content_order")
-@Data
 @Builder
 @Getter
 @Setter

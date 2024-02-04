@@ -2,12 +2,12 @@ package io.github.ardonplay.infopanel.server.controllers;
 
 
 import io.github.ardonplay.infopanel.server.operations.pageOperations.models.contentElements.TextElement;
-import io.github.ardonplay.infopanel.server.operations.pageOperations.dtos.PageContentDTO;
-import io.github.ardonplay.infopanel.server.operations.pageOperations.dtos.PageDTO;
-import io.github.ardonplay.infopanel.server.operations.pageOperations.dtos.PageFolderDTO;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.dto.PageContentDTO;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.dto.PageDTO;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.dto.PageFolderDTO;
 import io.github.ardonplay.infopanel.server.operations.pageOperations.models.enums.PageElementType;
 import io.github.ardonplay.infopanel.server.operations.pageOperations.models.enums.PageType;
-import io.github.ardonplay.infopanel.server.operations.pageOperations.services.PageService;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.services.impl.PageServiceImpl;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -40,7 +40,7 @@ public class PageControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private PageService pageService;
+    private PageServiceImpl pageService;
 
     static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:15.3")
             .withInitScript("init.sql")

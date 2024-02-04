@@ -1,8 +1,9 @@
-package io.github.ardonplay.infopanel.server.operations.pageOperations.dtos;
+package io.github.ardonplay.infopanel.server.operations.pageOperations.dto;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -25,16 +26,9 @@ import java.util.Objects;
         @JsonSubTypes.Type(value = PageFolderDTO.class, name = "FOLDER"),
         @JsonSubTypes.Type(value = PageDTO.class, name = "PAGE")
 })
-public class PageDTO {
-    Integer id;
-
-    String type;
+public class PageDTO extends AbstractPageDTO{
 
     Map<String, String> title;
-
-    Integer orderId;
-
-    Integer parentId;
 
     List<PageContentDTO> content;
 

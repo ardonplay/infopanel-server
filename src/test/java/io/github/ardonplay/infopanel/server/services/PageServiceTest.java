@@ -7,14 +7,14 @@ import io.github.ardonplay.infopanel.server.common.entities.types.PageElementTyp
 import io.github.ardonplay.infopanel.server.common.entities.types.PageTypeEntity;
 import io.github.ardonplay.infopanel.server.common.services.TypeCacheService;
 import io.github.ardonplay.infopanel.server.operations.pageOperations.models.contentElements.TextElement;
-import io.github.ardonplay.infopanel.server.operations.pageOperations.dtos.PageContentDTO;
-import io.github.ardonplay.infopanel.server.operations.pageOperations.dtos.PageDTO;
-import io.github.ardonplay.infopanel.server.operations.pageOperations.dtos.PageFolderDTO;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.dto.PageContentDTO;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.dto.PageDTO;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.dto.PageFolderDTO;
 import io.github.ardonplay.infopanel.server.operations.pageOperations.models.enums.PageElementType;
 import io.github.ardonplay.infopanel.server.operations.pageOperations.models.enums.PageType;
 import io.github.ardonplay.infopanel.server.common.repositories.PageRepository;
-import io.github.ardonplay.infopanel.server.operations.pageOperations.services.PageContentService;
-import io.github.ardonplay.infopanel.server.operations.pageOperations.services.PageService;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.services.impl.PageContentServiceImpl;
+import io.github.ardonplay.infopanel.server.operations.pageOperations.services.impl.PageServiceImpl;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -41,10 +41,10 @@ public class PageServiceTest {
     private PageRepository pageRepository;
 
     @MockBean
-    private PageContentService pageContentService;
+    private PageContentServiceImpl pageContentService;
 
     @Autowired
-    private PageService pageService;
+    private PageServiceImpl pageService;
 
     @MockBean
     private TypeCacheService cacheService;

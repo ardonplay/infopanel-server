@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface PageContentRepository extends JpaRepository<PageContent, Integer> {
     @Query("SELECT e FROM PageContent e WHERE e.pageElementType.name IN :names")
@@ -16,7 +17,7 @@ public interface PageContentRepository extends JpaRepository<PageContent, Intege
             @Param("names") List<String> names
     );
 
-    default boolean containsPair(List<PageContent> entities, Pair<PageElementType, JsonNode> pair) {
+    default boolean containsPair(List<PageContent> entities, Pair<PageElementType, Map<String,JsonNode>> pair) {
         for (PageContent entity : entities) {
 //            if (entity.getPageElementType().getName().equals(pair.first().name()) && entity.getBody().equals(pair.second())) {
 //                return true;

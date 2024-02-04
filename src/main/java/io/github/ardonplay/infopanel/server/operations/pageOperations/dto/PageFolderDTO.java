@@ -1,16 +1,19 @@
-package io.github.ardonplay.infopanel.server.operations.pageOperations.dtos;
+package io.github.ardonplay.infopanel.server.operations.pageOperations.dto;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @Data
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PageFolderDTO extends PageDTO {
+public class PageFolderDTO extends AbstractPageDTO {
+
+    Map<String, String> title;
 
     List<PageDTO> children;
 
