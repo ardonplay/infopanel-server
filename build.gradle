@@ -1,0 +1,93 @@
+plugins {
+    id 'java'
+    id 'jacoco'
+    id 'org.springframework.boot' version '3.2.1'
+    id 'io.spring.dependency-management' version '1.1.4'
+    id 'org.hibernate.orm' version '6.4.1.Final'
+}
+
+group = 'io.github.ardonplay.infopanel'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = '17'
+}
+
+ext {
+    jjwtVersion = '0.11.5'
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-devtools'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+
+    runtimeOnly 'org.postgresql:postgresql'
+
+
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.15.3'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.3'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.16.1'
+
+    implementation "io.jsonwebtoken:jjwt-api:${jjwtVersion}"
+    implementation "io.jsonwebtoken:jjwt-gson:${jjwtVersion}"
+    runtimeOnly "io.jsonwebtoken:jjwt-impl:${jjwtVersion}"
+
+    implementation 'io.minio:minio:8.5.7'
+    implementation 'org.apache.tika:tika-core:2.9.1'
+    implementation group: 'com.vladmihalcea', name: 'hibernate-types-60', version: '2.21.1'
+
+    implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    testAnnotationProcessor 'org.projectlombok:lombok'
+    testCompileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+
+
+    implementation group: 'org.projectlombok', name: 'lombok-mapstruct-binding', version: '0.2.0'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation "org.testcontainers:minio"
+    testImplementation 'org.testcontainers:postgresql'
+
+}
+
+//tasks.named('test') {
+//    useJUnitPlatform()
+//    finalizedBy jacocoTestReport
+//}
+
+//jacocoTestReport {
+//    reports {
+//        xml.required = true
+//        html.required = true
+//    }
+//    dependsOn test
+//}
+
+hibernate {
+    enhancement {
+        enableAssociationManagement = true
+    }
+}
+
+//check.dependsOn jacocoTestReport
+
