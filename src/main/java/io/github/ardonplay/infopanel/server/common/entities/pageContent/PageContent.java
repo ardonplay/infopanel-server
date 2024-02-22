@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "page_content")
@@ -16,9 +17,9 @@ import java.util.Objects;
 @Setter
 public class PageContent {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
-    private Integer id;
+    private UUID id;
 
 
 

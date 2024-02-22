@@ -7,8 +7,10 @@ import io.github.ardonplay.infopanel.server.operations.userOperations.models.enu
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.UUID;
+
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -16,10 +18,10 @@ import lombok.*;
 @JsonPropertyOrder({"id", "username", "password", "user_role"})
 public class UserEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     @JsonProperty("id")
-    private Integer id;
+    private UUID id;
 
     @JsonProperty("username")
     @Column(name = "username")

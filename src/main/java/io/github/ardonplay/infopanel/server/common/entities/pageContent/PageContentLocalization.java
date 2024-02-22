@@ -7,6 +7,8 @@ import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "page_content_localization")
 @NoArgsConstructor
@@ -16,9 +18,9 @@ import org.hibernate.type.SqlTypes;
 @Setter
 public class PageContentLocalization {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
-    private Integer id;
+    private UUID id;
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "body", columnDefinition = "jsonb")
