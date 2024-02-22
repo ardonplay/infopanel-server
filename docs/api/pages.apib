@@ -1,0 +1,508 @@
+FORMAT: 1A
+
+# Page API
+This is API for crud operations for pages.
+
+# GET /api/v1/page/{lang}/{id}
+
++ Parameters
+
+    + id: `41f70225-9231-4caa-93a4-db025486ba42` (uuid)
+        The id of page.
+
+    + lang: en (string)
+        The language localization of page.
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "id": "41f70225-9231-4caa-93a4-db025486ba42",
+                "type": "PAGE",
+                "title": "Test page",
+                "parent_id": "96c2f2a8-ae70-4d2c-b45f-b5e2d1e24e15",
+                "order_id": 1,
+                "content": [
+                        {
+                            "id": "7ea7e09a-5bc1-4925-9182-a57f6c91339d"
+                        },
+                         {
+                            "id": "6b049dad-7966-4047-b712-3ddff3fd1401"
+                        }
+                    ]
+            }
+
+    + Schema
+
+            {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                     "type": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "content": {
+                        "type": "array",
+                        "items": {
+                           "type": "object",
+                           "properties": {
+                                "id": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+
+# PATCH /api/v1/page
+
++ Request update page (application/json)
+
+    + Body
+
+             {
+                "id": "41f70225-9231-4caa-93a4-db025486ba42",
+                "type": "PAGE",
+                "title": { 
+                    "en": "Edited test page",
+                    "ru": "Измененная тестовая страница"
+                    },
+                "parent_id": "96c2f2a8-ae70-4d2c-b45f-b5e2d1e24e15",
+                "order_id": 1,
+                "content": [
+                        {
+                            id: "7ea7e09a-5bc1-4925-9182-a57f6c91339d"
+                        },
+                         {
+                            id: "6b049dad-7966-4047-b712-3ddff3fd1401"
+                        }
+                    ]
+            }
+
+    + Schema
+
+            {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                     "type": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "object",
+                        "properties": {
+                            "type": "string"
+                        }
+                    },
+                    "content": {
+                        "type": "array",
+                        "items": {
+                           "type": "object",
+                           "properties": {
+                                "id": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "id": "41f70225-9231-4caa-93a4-db025486ba42",
+                "type": "PAGE",
+                "title": { 
+                    "en": "Edited test page",
+                    "ru": "Измененная тестовая страница"
+                    },
+                "parent_id": "96c2f2a8-ae70-4d2c-b45f-b5e2d1e24e15",
+                "order_id": 1,
+                "content": [
+                        {
+                            "id": "7ea7e09a-5bc1-4925-9182-a57f6c91339d"
+                        },
+                         {
+                            "id": "6b049dad-7966-4047-b712-3ddff3fd1401"
+                        }
+                    ]
+            }
+
+    + Schema
+
+            {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                     "type": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "object",
+                        "properties": {
+                            "type": "string"
+                        }
+                    },
+                    "content": {
+                        "type": "array",
+                        "items": {
+                           "type": "object",
+                           "properties": {
+                                "id": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
++ Request update folder (application/json)
+
+    + Body
+
+             {
+                "id": "41f70225-9231-4caa-93a4-db025486ba42",
+                "type": "FOLDER",
+                "title": { 
+                    "en": "Edited test folder",
+                    "ru": "Измененная тестовая папка"
+                    },
+                "parent_id": "96c2f2a8-ae70-4d2c-b45f-b5e2d1e24e15",
+                "order_id": 1,
+                "children": [
+                        {
+                            "id": "7ea7e09a-5bc1-4925-9182-a57f6c91339d"
+                        },
+                         {
+                            "id": "6b049dad-7966-4047-b712-3ddff3fd1401"
+                        }
+                    ]
+            }
+            
+    + Schema
+
+            {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                     "type": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "object",
+                        "properties": {
+                            "type": "string"
+                        }
+                    },
+                    "children": {
+                        "type": "array",
+                        "items": {
+                           "type": "object",
+                           "properties": {
+                                "id": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "id": "41f70225-9231-4caa-93a4-db025486ba42",
+                "type": "FOLDER",
+                "title": { 
+                    "en": "Edited test folder",
+                    "ru": "Измененная тестовая папка"
+                    },
+                "parent_id": "96c2f2a8-ae70-4d2c-b45f-b5e2d1e24e15",
+                "order_id": 1,
+                "children": [
+                        {
+                            "id": "7ea7e09a-5bc1-4925-9182-a57f6c91339d"
+                        },
+                         {
+                            "id": "6b049dad-7966-4047-b712-3ddff3fd1401"
+                        }
+                    ]
+            }
+
+    + Schema
+
+            {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                     "type": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "object",
+                        "properties": {
+                            "type": "string"
+                        }
+                    },
+                    "children": {
+                        "type": "array",
+                        "items": {
+                           "type": "object",
+                           "properties": {
+                                "id": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+
+
+# POST /api/v1/page
+
++ Request save page (application/json)
+
+    + Body
+
+             {
+                "type": "PAGE",
+                "title": { 
+                    "en": "New test page",
+                    "ru": "Новая тестовая страница"
+                    },
+                "parent_id": "96c2f2a8-ae70-4d2c-b45f-b5e2d1e24e15",
+                "order_id": 1,
+                "content": [
+                        {
+                            id: "7ea7e09a-5bc1-4925-9182-a57f6c91339d"
+                        },
+                         {
+                            id: "6b049dad-7966-4047-b712-3ddff3fd1401"
+                        }
+                    ]
+            }
+
+    + Schema
+
+            {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                     "type": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "object",
+                        "properties": {
+                            "type": "string"
+                        }
+                    },
+                    "content": {
+                        "type": "array",
+                        "items": {
+                           "type": "object",
+                           "properties": {
+                                "id": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
++ Response 201 (application/json)
+
+    + Body
+
+            {
+                "id": "41f70225-9231-4caa-93a4-db025486ba42",
+                "type": "PAGE",
+                "title": { 
+                    "en": "Edited test page",
+                    "ru": "Измененная тестовая страница"
+                    },
+                "parent_id": "96c2f2a8-ae70-4d2c-b45f-b5e2d1e24e15",
+                "order_id": 1,
+                "content": [
+                        {
+                            id: "7ea7e09a-5bc1-4925-9182-a57f6c91339d"
+                        },
+                         {
+                            id: "6b049dad-7966-4047-b712-3ddff3fd1401"
+                        }
+                    ]
+            }
+
+    + Schema
+
+            {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                     "type": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "object",
+                        "properties": {
+                            "type": "string"
+                        }
+                    },
+                    "content": {
+                        "type": "array",
+                        "items": {
+                           "type": "object",
+                           "properties": {
+                                "id": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
++ Request save folder (application/json)
+
+    + Body
+
+             {
+                "type": "FOLDER",
+                "title": { 
+                    "en": "New test folder",
+                    "ru": "Новая тестовая папка"
+                    },
+                "parent_id": "96c2f2a8-ae70-4d2c-b45f-b5e2d1e24e15",
+                "order_id": 1,
+                "children": [
+                        {
+                            id: "7ea7e09a-5bc1-4925-9182-a57f6c91339d"
+                        },
+                         {
+                            id: "6b049dad-7966-4047-b712-3ddff3fd1401"
+                        }
+                    ]
+            }
+
+    + Schema
+
+            {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                     "type": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "object",
+                        "properties": {
+                            "type": "string"
+                        }
+                    },
+                    "children": {
+                        "type": "array",
+                        "items": {
+                           "type": "object",
+                           "properties": {
+                                "id": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
++ Response 201 (application/json)
+
+    + Body
+
+            {
+                "id": "41f70225-9231-4caa-93a4-db025486ba42",
+                "type": "FOLDER",
+                "title": { 
+                    "en": "New test folder",
+                    "ru": "Новая тестовая папка"
+                    },
+                "parent_id": "96c2f2a8-ae70-4d2c-b45f-b5e2d1e24e15",
+                "order_id": 1,
+                "children": [
+                        {
+                            id: "7ea7e09a-5bc1-4925-9182-a57f6c91339d"
+                        },
+                         {
+                            id: "6b049dad-7966-4047-b712-3ddff3fd1401"
+                        }
+                    ]
+            }
+
+    + Schema
+
+            {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                     "type": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "object",
+                        "properties": {
+                            "type": "string"
+                        }
+                    },
+                    "children": {
+                        "type": "array",
+                        "items": {
+                           "type": "object",
+                           "properties": {
+                                "id": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+# DELETE /api/v1/page/{id}
+
++ Parameters
+
+    + id: `41f70225-9231-4caa-93a4-db025486ba42` (uuid)
+        The id of page.
+
+
++ Response 200

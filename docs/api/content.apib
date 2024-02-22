@@ -1,0 +1,460 @@
+FORMAT: 1A
+
+# Page content API
+This is API for crud operations for page content.
+
+# GET /api/v1/page/content/{lang}/{id}
+
++ Parameters
+
+    + id: `41f70225-9231-4caa-93a4-db025486ba42` (uuid)
+        The id of content.
+
+    + lang: en (string)
+        The language localization of content.
+
++ Response 200 (application/json)
+
+    + Body
+
+            {   
+                "id": "41f70225-9231-4caa-93a4-db025486ba42",
+                "type": "TEXT",
+                "body": {
+                    "content": "Hello, this is test content"
+                    }
+            }
+
+    + Schema
+
+            {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                     "type": {
+                        "type": "string"
+                    },
+                    "body": {
+                        "type": "object"
+                    }
+                }
+            }
+
+# GET /api/v1/page/{id}/content/{lang}
+
++ Parameters
+
+    + id: `41f70225-9231-4caa-93a4-db025486ba42` (uuid)
+        The id of page.
+
+    + lang: en (string)
+        The language localization of content.
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+
+                "page_id": "41f70225-9231-4caa-93a4-db025486ba42",
+                "content": [{   
+                    "id": "41f70226-9231-4caa-93a4-db02rh486ba42",
+                    "type": "TEXT",
+                    "body": {
+                        "content": "Hello, this is test content"
+                        }
+                }]
+            }
+
+    + Schema
+
+            {
+                "type": "object",
+                "properties": {
+                    "page_id": {
+                        "type": "string"
+                    },
+                    "content": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "string"
+                                },
+                                 "type": {
+                                    "type": "string"
+                                },
+                                "body": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                    
+                }
+            }
+
+# PATCH /api/v1/page/content
+
++ Request (application/json)
+
+    + Body
+
+            [
+                {
+                    "id": "7ea7e09a-5bc1-4925-9182-a57f6c91339d",
+                    "type": "TEXT",
+                    "body": {
+                    "en": {
+                        "content": "Hello, this is edited content"
+                        },
+                       "ru": {
+                        "content": "Здравствуйте, это измененные данные"
+                        } 
+                        }
+                },
+                {
+                    "id": "6b049dad-7966-4047-b712-3ddff3fd1401",
+                    "type": "TEXT",
+                    "body": {
+                    "en": {
+                        "content": "Hello, this is second edited content"
+                        },
+                       "ru": {
+                        "content": "Здравствуйте, это вторые измененные данные"
+                        } 
+                        }
+                }
+            ]
+            
+
+    + Schema
+
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "string"
+                                },
+                                 "type": {
+                                    "type": "string"
+                                },
+                                "body": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+
++ Response 200 (application/json)
+
+    + Body
+
+            [
+                {
+                    "id": "7ea7e09a-5bc1-4925-9182-a57f6c91339d",
+                    "type": "TEXT",
+                    "body": {
+                    "en": {
+                        "content": "Hello, this is edited content"
+                        },
+                       "ru": {
+                        "content": "Здравствуйте, это измененные данные"
+                        } 
+                        }
+                },
+                {
+                    "id": "6b049dad-7966-4047-b712-3ddff3fd1401",
+                    "type": "TEXT",
+                    "body": {
+                    "en": {
+                        "content": "Hello, this is second edited content"
+                        },
+                       "ru": {
+                        "content": "Здравствуйте, это вторые измененные данные"
+                        } 
+                        }
+                }
+            ]
+            
+
+    + Schema
+
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "string"
+                                },
+                                 "type": {
+                                    "type": "string"
+                                },
+                                "body": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+
+# PATCH /api/v1/page/content/{id}
+
++ Parameters
+
+    + id: `41f70225-9231-4caa-93a4-db025486ba42` (uuid)
+        The id of content.
+
+
++ Request (application/json)
+
+    + Body
+
+                {
+                    "type": "TEXT",
+                    "body": {
+                    "en": {
+                        "content": "Hello, this is edited content"
+                        },
+                       "ru": {
+                        "content": "Здравствуйте, это измененные данные"
+                        } 
+                        }
+                }
+            
+
+    + Schema
+
+                        {
+                            "type": "object",
+                            "properties": {
+                            
+                                 "type": {
+                                    "type": "string"
+                                },
+                                "body": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+
++ Response 200 (application/json)
+
+    + Body
+
+                {
+                    "id": "7ea7e09a-5bc1-4925-9182-a57f6c91339d",
+                    "type": "TEXT",
+                    "body": {
+                    "en": {
+                        "content": "Hello, this is edited content"
+                        },
+                       "ru": {
+                        "content": "Здравствуйте, это измененные данные"
+                        } 
+                        }
+                }
+            
+
+    + Schema
+
+                {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "string"
+                        },
+                         "type": {
+                            "type": "string"
+                        },
+                        "body": {
+                            "type": "object"
+                        }
+                    }
+                }
+                    
+
+# POST /api/v1/page/content
+
++ Request (application/json)
+
+    + Body
+
+            [
+                {
+                    "type": "TEXT",
+                    "body": {
+                    "en": {
+                        "content": "Hello, this is new content"
+                        },
+                       "ru": {
+                        "content": "Здравствуйте, это новые данные"
+                        } 
+                        }
+                },
+                {
+                    "type": "TEXT",
+                    "body": {
+                    "en": {
+                        "content": "Hello, this is second new content"
+                        },
+                       "ru": {
+                        "content": "Здравствуйте, это вторые новые данные"
+                        } 
+                        }
+                }
+            ]
+
+    + Schema
+
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                 "type": {
+                                    "type": "string"
+                                },
+                                "body": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+
++ Response 201 (application/json)
+
+    + Body
+
+            [
+                {   
+                    "id": "574f72f1-480e-46b2-9b51-15c023488607",
+                    "type": "TEXT",
+                    "body": {
+                    "en": {
+                        "content": "Hello, this is new content"
+                        },
+                       "ru": {
+                        "content": "Здравствуйте, это новые данные"
+                        } 
+                        }
+                },
+                {   
+                    "id": "5bf5c1fd-07fd-4a65-bba9-9f91cd2c8c85",
+                    "type": "TEXT",
+                    "body": {
+                    "en": {
+                        "content": "Hello, this is second new content"
+                        },
+                       "ru": {
+                        "content": "Здравствуйте, это вторые новые данные"
+                        } 
+                        }
+                }
+            ]
+
+    + Schema
+
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "string"
+                                },
+                                 "type": {
+                                    "type": "string"
+                                },
+                                "body": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+
+
+# POST /api/v1/page/content
+
++ Request (application/json)
+
+    + Body
+
+                {
+                    "type": "TEXT",
+                    "body": {
+                    "en": {
+                        "content": "Hello, this is new content"
+                        },
+                       "ru": {
+                        "content": "Здравствуйте, это новые данные"
+                        } 
+                        }
+                }
+
+    + Schema
+
+                {
+                    "type": "object",
+                    "properties": {
+                         "type": {
+                            "type": "string"
+                        },
+                        "body": {
+                            "type": "object"
+                        }
+                    }
+                }
+                    
+
++ Response 201 (application/json)
+
+    + Body
+
+            {   
+                "id": "574f72f1-480e-46b2-9b51-15c023488607",
+                "type": "TEXT",
+                "body": {
+                "en": {
+                    "content": "Hello, this is new content"
+                    },
+                   "ru": {
+                    "content": "Здравствуйте, это новые данные"
+                    } 
+                    }
+            }
+
+    + Schema
+
+            {
+                 "type": "object",
+                 "properties": {
+                     "id": {
+                         "type": "string"
+                     },
+                      "type": {
+                         "type": "string"
+                     },
+                     "body": {
+                         "type": "object"
+                     }
+                 }
+            }
+
+
+
+
+# DELETE /api/v1/page/content/{id}
+
++ Parameters
+
+    + id: `41f70225-9231-4caa-93a4-db025486ba42` (uuid)
+        The id of page.
+
+
++ Response 200
